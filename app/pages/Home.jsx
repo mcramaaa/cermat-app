@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
+import AppButton from "../components/AppButton";
 
 export default function Home() {
   const statusBarHeight = StatusBar.currentHeight || 0;
@@ -12,6 +13,10 @@ export default function Home() {
 
   const profileBtn = () => {
     navigation.navigate("Profile");
+  };
+
+  const setFirstNameBtn = () => {
+    navigation.navigate("firstName");
   };
 
   return (
@@ -34,6 +39,12 @@ export default function Home() {
             <Ionicons name="md-person-circle-sharp" size={40} color="black" />
           </TouchableOpacity>
         </View>
+        <AppButton
+          tittle="setFirstName page"
+          height={50}
+          width={200}
+          onPress={setFirstNameBtn}
+        />
       </View>
     </LinearGradient>
   );
