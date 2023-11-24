@@ -1,5 +1,4 @@
-import * as React from "react";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import React from "react";
 import Home from "./Home";
 import Panduan from "./Panduan";
 import Cermat from "./Cermat";
@@ -11,13 +10,27 @@ class AppTabs extends React.Component {
   render() {
     const Tab = createBottomTabNavigator();
     const Tabs = [
-      { id: "Panduan", component: Panduan },
+      {
+        id: "Panduan",
+        component: Panduan,
+        icon: (
+          <MaterialCommunityIcons
+            name="tooth-outline"
+            size={30}
+            color="black"
+          />
+        ),
+      },
       {
         id: "Home",
         component: Home,
-        icon: <AntDesign name="home" size={24} color="black" />,
+        icon: <AntDesign name="home" size={30} color="black" />,
       },
-      { id: "Cermat", component: Cermat },
+      {
+        id: "Cermat",
+        component: Cermat,
+        icon: <AntDesign name="calendar" size={30} color="black" />,
+      },
     ];
     return (
       <Tab.Navigator
