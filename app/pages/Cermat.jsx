@@ -1,11 +1,10 @@
 import { View, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import Reminder from "../components/cermat/Reminder";
-import Edukasi from "../components/cermat/Edukasi";
-import KalenderGigi from "../components/cermat/KalenderGigi";
-import Monitoring from "../components/cermat/Monitoring";
+import Reminder from "../components/cermatBtn/Reminder";
+import Edukasi from "../components/cermatBtn/Edukasi";
+import KalenderGigi from "../components/cermatBtn/KalenderGigi";
+import Monitoring from "../components/cermatBtn/Monitoring";
 import { useNavigation } from "@react-navigation/native";
-import PgKalenderGigi from "./pageFeature/PgKalenderGigi";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Cermat() {
