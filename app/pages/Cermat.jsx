@@ -1,8 +1,32 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Reminder from "../components/cermat/Reminder";
+import Edukasi from "../components/cermat/Edukasi";
+import KalenderGigi from "../components/cermat/KalenderGigi";
+import Monitoring from "../components/cermat/Monitoring";
+import { useNavigation } from "@react-navigation/native";
+import PgKalenderGigi from "./pageFeature/PgKalenderGigi";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Cermat() {
+  const Navigation = useNavigation();
+
+  const goEdukasi = () => {
+    Navigation.navigate("PgEdukasi");
+    console.log("first");
+  };
+  const goReminder = () => {
+    Navigation.navigate("PgReminder");
+    console.log("first");
+  };
+  const goKalenderGigi = () => {
+    Navigation.navigate("PgKalenderGigi");
+    console.log("first");
+  };
+  const goMonitoring = () => {
+    Navigation.navigate("PgMonitoring");
+    console.log("first");
+  };
   return (
     <View style={{ backgroundColor: "#9BACF1", height: "100%" }}>
       <ScrollView
@@ -14,31 +38,14 @@ export default function Cermat() {
           paddingTop: 27,
           marginTop: 130,
           paddingHorizontal: 25,
+          overflow: "hidden",
         }}
       >
         <View style={{ gap: 25, paddingBottom: 170 }}>
-          <View
-            style={{
-              height: 200,
-              maxWidth: 350,
-              borderRadius: 15,
-              backgroundColor: "#9BACF1",
-              padding: 15,
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-            >
-              <MaterialCommunityIcons
-                name="tooth-outline"
-                size={30}
-                color="white"
-              />
-              <Text style={{ fontFamily: "Poppins-Medium" }}>
-                Reminder Sikat Gigi
-              </Text>
-            </View>
-          </View>
+          <Edukasi onPress={goEdukasi} />
+          <Reminder onPress={goReminder} />
+          <KalenderGigi onPress={goKalenderGigi} />
+          <Monitoring onPress={goMonitoring} />
         </View>
       </ScrollView>
     </View>

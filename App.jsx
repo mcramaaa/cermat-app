@@ -4,9 +4,12 @@ import { useFonts } from "expo-font";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AppTabs from "./app/pages/AppTabs";
-import AppLoading from "./app/components/AppLoading";
 import Profile from "./app/pages/Profile";
 import SetFirstName from "./app/components/SetFirstName";
+import PgEdukasi from "./app/pages/pageFeature/PgEdukasi";
+import PgReminder from "./app/pages/pageFeature/PgReminder";
+import PgKalenderGigi from "./app/pages/pageFeature/PgKalenderGigi";
+import PgMonitoring from "./app/pages/pageFeature/PgMonitoring";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +36,26 @@ export default function App() {
           <Stack.Screen
             name="firstName"
             component={SetFirstName}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PgEdukasi"
+            component={PgEdukasi}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PgReminder"
+            component={PgReminder}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PgKalenderGigi"
+            component={PgKalenderGigi}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="PgMonitoring"
+            component={PgMonitoring}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

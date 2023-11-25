@@ -9,15 +9,15 @@ import { useUser } from "../hook/useUser.zustand";
 
 export default function Home() {
   const statusBarHeight = StatusBar.currentHeight || 0;
-  const navigation = useNavigation();
+  const Navigation = useNavigation();
   const { user } = useUser();
 
   const profileBtn = () => {
-    navigation.navigate("Profile");
+    Navigation.navigate("Profile");
   };
 
   const setFirstNameBtn = () => {
-    navigation.navigate("firstName");
+    Navigation.navigate("firstName");
   };
 
   return (
