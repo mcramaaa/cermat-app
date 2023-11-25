@@ -30,7 +30,11 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="firstName" component={SetFirstName} />
+          <Stack.Screen
+            name="firstName"
+            component={SetFirstName}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

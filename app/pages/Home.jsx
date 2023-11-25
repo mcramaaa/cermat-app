@@ -5,11 +5,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 import AppButton from "../components/AppButton";
+import { useUser } from "../hook/useUser.zustand";
 
 export default function Home() {
   const statusBarHeight = StatusBar.currentHeight || 0;
   const navigation = useNavigation();
-  let userName = "Rama";
+  const { user } = useUser();
 
   const profileBtn = () => {
     navigation.navigate("Profile");
@@ -33,7 +34,7 @@ export default function Home() {
           }}
         >
           <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 25 }}>
-            Hallo {userName}
+            Hallo {user.name}
           </Text>
           <TouchableOpacity onPress={profileBtn}>
             <Ionicons name="md-person-circle-sharp" size={40} color="black" />
