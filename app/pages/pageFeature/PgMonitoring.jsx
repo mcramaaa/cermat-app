@@ -42,7 +42,9 @@ export default function PgMonitoring() {
           overflow: "hidden",
         }}
       >
-        <View style={{ gap: 25, paddingBottom: 170 }}></View>
+        <View style={{ gap: 25, paddingBottom: 170 }}>
+          <Text>berisi quis</Text>
+        </View>
       </ScrollView>
     </View>
   );
