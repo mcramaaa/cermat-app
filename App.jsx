@@ -20,7 +20,6 @@ export default function App() {
     "Poppins-Medium": require("./assets/fonts/Poppins-Medium.ttf"),
     "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
   });
-
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="dark" />

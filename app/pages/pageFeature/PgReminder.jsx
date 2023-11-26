@@ -1,6 +1,7 @@
 import { View, ScrollView, StatusBar, Text } from "react-native";
 import React from "react";
 import AlarmBox from "../../components/AlarmBox";
+import AppCalendar from "../../components/AppCalendar";
 
 export default function PgReminder() {
   const statusBarHeight = StatusBar.currentHeight || 0;
@@ -44,7 +45,8 @@ export default function PgReminder() {
         }}
       >
         <View style={{ gap: 25, paddingBottom: 170 }}>
-          <AlarmBox />
+          {/* <AlarmBox /> */}
+          <AppCalendar />
         </View>
       </ScrollView>
     </View>

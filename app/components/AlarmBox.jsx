@@ -22,10 +22,6 @@ export const App = () => {
     setMode(currentMode);
   };
 
-  const showDatepicker = () => {
-    showMode("date");
-  };
-
   const showTimepicker = () => {
     showMode("time");
   };
