@@ -1,26 +1,42 @@
-import * as React from "react";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import React from "react";
 import Home from "./Home";
 import Panduan from "./Panduan";
 import Cermat from "./Cermat";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 class AppTabs extends React.Component {
   render() {
     const Tab = createBottomTabNavigator();
     const Tabs = [
-      { id: "Panduan", component: Panduan },
+      {
+        id: "Panduan",
+        component: Panduan,
+        icon: (
+          <MaterialCommunityIcons
+            name="tooth-outline"
+            size={30}
+            color="black"
+          />
+        ),
+      },
       {
         id: "Home",
         component: Home,
-        icon: <AntDesign name="home" size={24} color="black" />,
+        icon: <AntDesign name="home" size={30} color="black" />,
       },
-      { id: "Cermat", component: Cermat },
+      {
+        id: "Cermat",
+        component: Cermat,
+        icon: <AntDesign name="calendar" size={30} color="black" />,
+      },
     ];
+
     return (
       <Tab.Navigator
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -29,8 +45,8 @@ class AppTabs extends React.Component {
             bottom: 20,
             left: 20,
             right: 20,
-            elevation: 3,
-            backgroundColor: "whites",
+            elevation: 2,
+            backgroundColor: "#C2CAEB",
             borderRadius: 10,
             height: 60,
           },
@@ -51,7 +67,7 @@ class AppTabs extends React.Component {
                       style={
                         focused
                           ? {
-                              backgroundColor: "#1AA7EC",
+                              backgroundColor: "#9BACF1",
                               alignItems: "center",
                               justifyContent: "center",
                               width: 60,
@@ -62,7 +78,7 @@ class AppTabs extends React.Component {
                               borderColor: "white",
                               shadowRadius: 3.84,
                               shadowOpacity: 0.3,
-                              marginBottom: 5,
+                              marginBottom: 2,
                             }
                           : {}
                       }
@@ -71,7 +87,9 @@ class AppTabs extends React.Component {
                     </View>
                     <Text
                       style={
-                        focused ? { paddingBottom: 40 } : { display: "none" }
+                        focused
+                          ? { paddingBottom: 31, fontFamily: "Poppins-Medium" }
+                          : { display: "none" }
                       }
                     >
                       {data.id}
