@@ -30,7 +30,7 @@ export default function PgReminder() {
             elevation: 5,
           }}
         >
-          Reminder Sikat Gigi
+          Reminder {"\n"}Sikat Gigi
         </Text>
       </View>
       <ScrollView

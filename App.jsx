@@ -10,6 +10,7 @@ import PgEdukasi from "./app/pages/pageFeature/PgEdukasi";
 import PgReminder from "./app/pages/pageFeature/PgReminder";
 import PgKalenderGigi from "./app/pages/pageFeature/PgKalenderGigi";
 import PgMonitoring from "./app/pages/pageFeature/PgMonitoring";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 
@@ -40,22 +41,47 @@ export default function App() {
           <Stack.Screen
             name="PgEdukasi"
             component={PgEdukasi}
-            options={{ headerShown: false }}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
           />
           <Stack.Screen
             name="PgReminder"
             component={PgReminder}
-            options={{ headerShown: false }}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
           />
+
           <Stack.Screen
             name="PgKalenderGigi"
             component={PgKalenderGigi}
-            options={{ headerShown: false }}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
           />
           <Stack.Screen
             name="PgMonitoring"
             component={PgMonitoring}
-            options={{ headerShown: false }}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
