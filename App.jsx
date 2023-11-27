@@ -11,6 +11,7 @@ import PgReminder from "./app/pages/pageFeature/PgReminder";
 import PgKalenderGigi from "./app/pages/pageFeature/PgKalenderGigi";
 import PgMonitoring from "./app/pages/pageFeature/PgMonitoring";
 import { Ionicons } from "@expo/vector-icons";
+import Keluhan from "./app/components/Keluhan";
 
 const Stack = createStackNavigator();
 
@@ -75,6 +76,17 @@ export default function App() {
           <Stack.Screen
             name="PgMonitoring"
             component={PgMonitoring}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="Keluhan"
+            component={Keluhan}
             options={{
               headerTitleStyle: { display: "none" },
               headerTransparent: true,

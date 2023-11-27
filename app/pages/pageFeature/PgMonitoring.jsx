@@ -1,13 +1,18 @@
 import { View, ScrollView, StatusBar, Text } from "react-native";
-import React from "react";
-import AppButton from "../../components/AppButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useState } from "react";
+import AnimatedLottieView from "lottie-react-native";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PgMonitoring() {
   const statusBarHeight = StatusBar.currentHeight || 0;
-  const cermat = () => {
-    Navigation.navigate("App");
-    console.log("first");
+  const Navigation = useNavigation();
+  const [sesuai, setSesuai] = useState();
+  function answerSesuai() {
+    setSesuai(true);
+  }
+  const answerTidakSesuai = () => {
+    Navigation.navigate("Keluhan");
   };
 
   return (
@@ -42,6 +47,7 @@ export default function PgMonitoring() {
           paddingTop: 27,
           paddingHorizontal: 25,
           overflow: "hidden",
+          flexGrow: 1,
         }}
       >
         <View style={{ gap: 1, paddingBottom: 170 }}>
@@ -56,7 +62,8 @@ export default function PgMonitoring() {
             }}
           >
             <TouchableOpacity
-              // onPress={sikatGigiDuaKaliBtn}
+              onPress={answerSesuai}
+              true
               style={{
                 backgroundColor: "#9BACF1",
                 minWidth: 150,
@@ -79,7 +86,7 @@ export default function PgMonitoring() {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              // onPress={sikatGigiSekaliBtn}
+              onPress={answerTidakSesuai}
               style={{
                 backgroundColor: "pink",
                 minWidth: 150,
@@ -97,7 +104,31 @@ export default function PgMonitoring() {
               </Text>
             </TouchableOpacity>
           </View>
-          <View></View>
+          <View
+            style={{
+              display: sesuai === true ? "" : "none",
+              paddingHorizontal: 15,
+            }}
+          >
+            <AnimatedLottieView
+              source={require("../../components/lotties/goodJob.json")}
+              autoPlay={true}
+              style={{ position: "relative" }}
+            />
+            <View>
+              <Text style={{ marginBottom: 10 }}>
+                1. Sikat gigi 2x sehari {"("}Pagi setelah Makan dan Malam
+                sebelum Tidur{")"}
+              </Text>
+              <Text style={{ marginBottom: 10 }}>
+                2. Kurangi Makanan Manis dan Melekat Konsumsi makanan bergizi
+              </Text>
+              <Text>
+                3. Konsultasi ke dokter gigi secara berkala minimal 6 bulan
+                sekali
+              </Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </View>

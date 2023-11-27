@@ -51,6 +51,7 @@ export default function SetFirstName() {
           width={150}
           onPress={handleSubmitName}
           tittle="Simpan"
+          marginTop={20}
         />
       </View>
     </LinearGradient>
