@@ -78,7 +78,7 @@ export default function PgEdukasi() {
                 style={{
                   paddingHorizontal: 10,
                   paddingVertical: 10,
-                  backgroundColor: "#1AA7EC",
+                  backgroundColor: "#9BACF1",
                   color: "white",
                   fontSize: 17,
                   textAlign: "center",
