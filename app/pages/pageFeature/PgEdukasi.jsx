@@ -8,8 +8,16 @@ export default function PgEdukasi() {
 
   const dataVideo = [
     {
+      src: require("../../../assets/videos/FilmAnimasi.mp4"),
+      name: "Film Animasi Pendek Gigi dan Kuman",
+    },
+    {
+      src: require("../../../assets/videos/Penyuluhan.mp4"),
+      name: "Penyuluhan Cara Menyikat Gigi yang Benar",
+    },
+    {
       src: require("../../../assets/videos/tes.mp4"),
-      name: "Pentingnya Menjaga Kesehatan Gigi Anak",
+      name: "Video Edukasi Karies Gigi",
     },
   ];
 
