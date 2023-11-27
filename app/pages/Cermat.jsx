@@ -12,19 +12,15 @@ export default function Cermat() {
 
   const goEdukasi = () => {
     Navigation.navigate("PgEdukasi");
-    console.log("first");
   };
   const goReminder = () => {
     Navigation.navigate("PgReminder");
-    console.log("first");
   };
   const goKalenderGigi = () => {
     Navigation.navigate("PgKalenderGigi");
-    console.log("first");
   };
   const goMonitoring = () => {
     Navigation.navigate("PgMonitoring");
-    console.log("first");
   };
   return (
     <View style={{ backgroundColor: "#9BACF1", height: "100%" }}>

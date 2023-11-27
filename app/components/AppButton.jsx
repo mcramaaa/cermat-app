@@ -2,12 +2,18 @@ import { View, Text } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function AppButton({ onPress, tittle, width, height }) {
+export default function AppButton({
+  onPress,
+  tittle,
+  width,
+  height,
+  marginTop,
+}) {
   return (
     <TouchableOpacity onPress={onPress} style={{ height: height + 30 }}>
       <View
         style={{
-          marginTop: 15,
+          marginTop: marginTop,
           width: width,
           height: height,
           backgroundColor: "#CCA39D",
