@@ -1,12 +1,31 @@
-import { View, ScrollView, StatusBar, Text } from "react-native";
-import React from "react";
+import { View, ScrollView, StatusBar, Text, Dimensions } from "react-native";
+import { Video } from "expo-av";
+import React, { useEffect } from "react";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 export default function PgEdukasi() {
   const statusBarHeight = StatusBar.currentHeight || 0;
-  const cermat = () => {
-    Navigation.navigate("App");
-    console.log("first");
-  };
+
+  const dataVideo = [
+    {
+      src: require("../../../assets/videos/tes.mp4"),
+      name: "Pentingnya Menjaga Kesehatan Gigi Anak",
+    },
+  ];
+
+  const video = React.useRef(null);
+  const secondVideo = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+
+  function setOrientation() {
+    if (Dimensions.get("window").height > Dimensions.get("window").width) {
+      //Device is in portrait mode, rotate to landscape mode.
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    } else {
+      //Device is in landscape mode, rotate to portrait mode.
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }
+  }
 
   return (
     <View
@@ -42,7 +61,45 @@ export default function PgEdukasi() {
           overflow: "hidden",
         }}
       >
-        <View style={{ gap: 25, paddingBottom: 170 }}></View>
+        <View style={{ gap: 25, paddingBottom: 170 }}>
+          {dataVideo.map((data, idx) => (
+            <View
+              key={idx}
+              style={{
+                width: "100%",
+                backgroundColor: "white",
+                elevation: 3,
+                overflow: "hidden",
+                borderRadius: 15,
+                marginVertical: 20,
+              }}
+            >
+              <Text
+                style={{
+                  paddingHorizontal: 10,
+                  paddingVertical: 10,
+                  backgroundColor: "#1AA7EC",
+                  color: "white",
+                  fontSize: 17,
+                  textAlign: "center",
+                  fontFamily: "Poppins-SemiBold",
+                }}
+              >
+                {data.name}
+              </Text>
+              <Video
+                ref={video}
+                style={{ height: 220, width: "100%" }}
+                source={data.src}
+                useNativeControls
+                resizeMode="contain"
+                isLooping
+                onPlaybackStatusUpdate={setStatus}
+                onFullscreenUpdate={setOrientation}
+              />
+            </View>
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
