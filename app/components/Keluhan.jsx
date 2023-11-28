@@ -1,14 +1,19 @@
-import { View, Text, TextInput, Keyboard, Linking } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Keyboard,
+  Linking,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import AppButton from "./AppButton";
-import { useUser } from "../hook/useUser.zustand";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Keluhan() {
   const navigation = useNavigation();
   const [text, setText] = useState("");
-  const noWhatsApp = "81330129266";
+  const noWhatsApp = "81945389062";
   const handleSubmit = () => {
     Keyboard.dismiss();
     // navigation.navigate("App");
@@ -16,6 +21,10 @@ export default function Keluhan() {
       `https://api.whatsapp.com/send?phone=62${noWhatsApp}&text=${text}`
     );
   };
+
+  function cancel() {
+    navigation.navigate("App");
+  }
 
   return (
     <LinearGradient
@@ -50,14 +59,63 @@ export default function Keluhan() {
             value={text}
           />
         </View>
-        <View style={{ alignItems: "center" }}>
-          <AppButton
-            height={40}
-            width={200}
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            gap: 10,
+            paddingVertical: 10,
+          }}
+        >
+          <TouchableOpacity
+            onPress={cancel}
+            true
+            style={{
+              backgroundColor: "pink",
+              minWidth: 150,
+              maxWidth: 250,
+              paddingHorizontal: 10,
+              maxWidth: 200,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 10,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Poppins-SemiBold",
+                color: "white",
+                fontSize: 20,
+              }}
+            >
+              Batal
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={handleSubmit}
-            tittle="Kirim Keluhan"
-            marginTop={20}
-          />
+            style={{
+              backgroundColor: "#9BACF1",
+              minWidth: 150,
+              maxWidth: 250,
+              paddingHorizontal: 10,
+              maxWidth: 200,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 10,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Poppins-SemiBold",
+                color: "white",
+                fontSize: 20,
+              }}
+            >
+              Kirim
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </LinearGradient>

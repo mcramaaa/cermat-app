@@ -1,19 +1,23 @@
 import { View, ScrollView, StatusBar, Text } from "react-native";
-import React, { useState } from "react";
-import AnimatedLottieView from "lottie-react-native";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import LottieView from "lottie-react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import goodJobAnim from "../../components/lotties/goodJob2.json";
 
 export default function PgMonitoring() {
   const statusBarHeight = StatusBar.currentHeight || 0;
   const Navigation = useNavigation();
-  const [sesuai, setSesuai] = useState();
+  const [sesuai, setSesuai] = useState(false);
   function answerSesuai() {
     setSesuai(true);
   }
   const answerTidakSesuai = () => {
     Navigation.navigate("Keluhan");
   };
+  useEffect(() => {
+    setSesuai(false);
+  }, []);
 
   return (
     <View
@@ -111,11 +115,14 @@ export default function PgMonitoring() {
               paddingHorizontal: 15,
             }}
           >
-            <AnimatedLottieView
-              source={require("../../components/lotties/goodJob.json")}
-              autoPlay={true}
-              style={{ position: "relative" }}
-            />
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <LottieView
+                source={goodJobAnim}
+                autoPlay={true}
+                loop={true}
+                style={{ width: 200, height: 200 }}
+              />
+            </View>
             <View>
               <Text style={{ marginBottom: 10 }}>
                 1. Sikat gigi 2x sehari {"("}Pagi setelah Makan dan Malam

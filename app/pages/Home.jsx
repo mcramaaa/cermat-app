@@ -50,12 +50,22 @@ export default function Home() {
             resizeMode="contain"
           />
         </View>
-        {/* <AppButton
+        <View
+          style={{
+            width: "100%",
+            backgroundColor: "white",
+            height: "100%",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            elevation: 1,
+          }}
+        ></View>
+        <AppButton
           tittle="setFirstName page"
           height={50}
           width={200}
           onPress={setFirstNameBtn}
-        /> */}
+        />
       </View>
     </LinearGradient>
   );
