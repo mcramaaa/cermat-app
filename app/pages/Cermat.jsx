@@ -36,7 +36,14 @@ export default function Cermat() {
           overflow: "hidden",
         }}
       >
-        <View style={{ gap: 25, paddingBottom: 170 }}>
+        <View
+          style={{
+            gap: 25,
+            paddingBottom: 170,
+            alignItems: "center",
+            paddingHorizontal: 10,
+          }}
+        >
           <Edukasi onPress={goEdukasi} />
           <Reminder onPress={goReminder} />
           <KalenderGigi onPress={goKalenderGigi} />

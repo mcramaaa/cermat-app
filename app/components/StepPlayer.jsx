@@ -10,11 +10,14 @@ const StepPlayer = ({ source, style }) => {
         await videoRef.current.loadAsync(source);
         await videoRef.current.playAsync();
         await videoRef.current.setIsLoopingAsync(true);
+        await videoRef.current.setIsMutedAsync(true);
       }
     })();
   }, []);
 
-  return <Video ref={videoRef} style={{ ...style }} resizeMode="contain" />;
+  return (
+    <Video ref={videoRef} style={{ ...style }} resizeMode="contain" audi />
+  );
 };
 
 export default StepPlayer;
