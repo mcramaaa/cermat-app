@@ -8,7 +8,7 @@ export default function Edukasi({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <LinearGradient
-        colors={["#9BACF1", "#B9DFE2"]}
+        colors={["#9BACF1", "#9BACF1"]}
         style={{
           height: 200,
           maxWidth: 350,
@@ -36,7 +36,9 @@ export default function Edukasi({ onPress }) {
           </Text>
         </View>
         <View style={{ justifyContent: "center" }}>
-          <Text>Yuk Rawat gigimu dan sikat gigi teratur</Text>
+          <Text style={{ fontFamily: "Poppins-Medium", color: "white" }}>
+            Gigi dan Mulut Sehat {"\n"}Cerminan Kesehatan Tubuh
+          </Text>
         </View>
         <View
           style={{
