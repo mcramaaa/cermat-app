@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, Dimensions } from "react-native";
+import { View, Text, StatusBar, Dimensions, Image } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -31,6 +31,8 @@ export default function Home() {
             paddingHorizontal: 15,
             marginTop: 5,
             alignItems: "center",
+            position: "absolute",
+            width: "100%",
           }}
         >
           <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 25 }}>
@@ -40,12 +42,20 @@ export default function Home() {
             <Ionicons name="md-person-circle-sharp" size={40} color="black" />
           </TouchableOpacity>
         </View>
-        <AppButton
+
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Image
+            source={require("../../assets/logo.png")}
+            style={{ width: "70%" }}
+            resizeMode="contain"
+          />
+        </View>
+        {/* <AppButton
           tittle="setFirstName page"
           height={50}
           width={200}
           onPress={setFirstNameBtn}
-        />
+        /> */}
       </View>
     </LinearGradient>
   );
