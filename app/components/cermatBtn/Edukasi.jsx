@@ -11,7 +11,8 @@ export default function Edukasi({ onPress }) {
         colors={["#9BACF1", "#9BACF1"]}
         style={{
           height: 200,
-          maxWidth: 350,
+          minWidth: 350,
+          maxWidth: 450,
           borderRadius: 15,
           backgroundColor: "#9BACF1",
           padding: 15,

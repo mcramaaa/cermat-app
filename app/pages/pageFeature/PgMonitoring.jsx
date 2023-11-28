@@ -33,9 +33,10 @@ export default function PgMonitoring() {
             fontSize: 30,
             color: "white",
             elevation: 5,
+            paddingHorizontal: 20,
           }}
         >
-          Monitoring Pertumbuhan Gigi
+          Monitoring {"\n"}Pertumbuhan Gigi
         </Text>
       </View>
       <ScrollView

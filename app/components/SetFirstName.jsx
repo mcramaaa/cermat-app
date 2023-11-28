@@ -1,5 +1,6 @@
-import { View, Text, TextInput, Keyboard } from "react-native";
+import { View, Text, TextInput, Keyboard, Image } from "react-native";
 import React, { useState } from "react";
+// import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import AppButton from "./AppButton";
 import { useUser } from "../hook/useUser.zustand";
@@ -19,6 +20,13 @@ export default function SetFirstName() {
       colors={["#9BACF1", "#ffffff"]}
       style={{ height: "100%", alignItems: "center", justifyContent: "center" }}
     >
+      {/* <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Image
+          source={require("../../assets/logo.png")}
+          style={{ width: "70%" }}
+          resizeMode="contain"
+        />
+      </View> */}
       <View
         style={{
           width: 350,
