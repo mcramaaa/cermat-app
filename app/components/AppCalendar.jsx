@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import {
   dayNames,
@@ -7,6 +7,9 @@ import {
   monthNames,
   today,
 } from "../constants/calendar-config";
+import * as SQLite from "expo-sqlite";
+import { useFocusEffect } from "@react-navigation/native";
+import { getTodayString } from "../helpers/getTodayString";
 
 LocaleConfig.locales["fr"] = {
   monthNames: monthNames,
@@ -18,6 +21,7 @@ LocaleConfig.locales["fr"] = {
 LocaleConfig.defaultLocale = "fr";
 
 export default function AppCalendar() {
+  const db = SQLite.openDatabase("cermat.db");
   const DotStyle = {
     width: 30,
     height: 30,
@@ -26,13 +30,102 @@ export default function AppCalendar() {
     zIndex: -10,
   };
 
+  const [dataSikatGigi, setdataSikatGigi] = useState([]);
+
+  const [isDisable, setIsDisable] = useState({
+    sekali: false,
+    duakali: true,
+  });
   const sikatGigiSekaliBtn = () => {
-    console.log("sikat gigi sekali");
+    // console.log("sikat gigi sekali");
+    createReport();
   };
 
   const sikatGigiDuaKaliBtn = () => {
-    console.log("sikat gigi 2x");
+    createReport();
   };
+
+  const [isCrud, setIsCrud] = useState(0);
+
+  function createReport() {
+    const todayString = getTodayString();
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "INSERT INTO reports (created_at) VALUES (?)",
+          [`${todayString}`],
+          (_, { insertId, rowsAffected }) => {
+            if (rowsAffected > 0) {
+              setIsCrud((oldValue) => oldValue + 1);
+              resolve(rowsAffected, insertId);
+            } else {
+              reject(new Error("Failed to insert user"));
+            }
+          },
+          (_, error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  function getReports() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT created_at AS date, COUNT(*) as status FROM reports GROUP BY created_at",
+          [],
+          (tx, { rows }) => {
+            const reportRows = rows._array;
+            resolve(reportRows);
+          },
+          (tx, error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  const riwayatSikatGigiArray = [];
+
+  dataSikatGigi.forEach((data) => {
+    riwayatSikatGigiArray.push(
+      Object.assign({
+        [data.date]: {
+          marked: data.status === 0 ? false : true,
+          dotColor: `${data.status === 1 ? "pink" : "#9BACF1"}`,
+        },
+      })
+    );
+  });
+  const riwayatSikatGigi = {};
+  riwayatSikatGigiArray.forEach((item) => {
+    for (const date in item) {
+      if (item.hasOwnProperty(date)) {
+        riwayatSikatGigi[date] = item[date];
+      }
+    }
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      getReports()
+        .then((res) => {
+          setdataSikatGigi(res);
+          const todayString = getTodayString();
+          const dataNow = res.filter((value) => value.date == todayString);
+          if (dataNow.length > 0 && dataNow[0].status == 1) {
+            setIsDisable({ sekali: true, duakali: false });
+          }
+          if (dataNow.length > 0 && dataNow[0].status >= 2) {
+            setIsDisable({ sekali: true, duakali: true });
+          }
+        })
+        .catch((err) => console.log(err));
+    }, [isCrud])
+  );
   return (
     <View
       style={{
@@ -63,10 +156,7 @@ export default function AppCalendar() {
         </Text>
       </View>
       <Calendar
-        markedDates={{
-          "2023-11-01": { marked: true, dotColor: "pink" },
-          "2023-11-02": { marked: true, dotColor: "#9BACF1" },
-        }}
+        markedDates={riwayatSikatGigi}
         theme={{
           dotStyle: DotStyle,
           todayTextColor: "black",
@@ -132,6 +222,7 @@ export default function AppCalendar() {
         }}
       >
         <TouchableOpacity
+          disabled={isDisable.sekali}
           onPress={sikatGigiSekaliBtn}
           style={{
             backgroundColor: "pink",
@@ -150,6 +241,7 @@ export default function AppCalendar() {
         </TouchableOpacity>
 
         <TouchableOpacity
+          disabled={isDisable.duakali}
           onPress={sikatGigiDuaKaliBtn}
           style={{
             backgroundColor: "#9BACF1",
