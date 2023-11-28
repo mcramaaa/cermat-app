@@ -11,12 +11,9 @@ export default function PgEdukasi() {
       src: require("../../../assets/videos/FilmAnimasi.mp4"),
       name: "Film Animasi Pendek Gigi dan Kuman",
     },
+
     {
-      src: require("../../../assets/videos/Penyuluhan.mp4"),
-      name: "Penyuluhan Cara Menyikat Gigi yang Benar",
-    },
-    {
-      src: require("../../../assets/videos/tes.mp4"),
+      src: require("../../../assets/videos/VideoEdukasi.mp4"),
       name: "Video Edukasi Karies Gigi",
     },
   ];
@@ -85,7 +82,6 @@ export default function PgEdukasi() {
               <Text
                 style={{
                   paddingHorizontal: 10,
-                  paddingVertical: 10,
                   backgroundColor: "#9BACF1",
                   color: "white",
                   fontSize: 17,
@@ -100,7 +96,7 @@ export default function PgEdukasi() {
                 style={{ height: 220, width: "100%" }}
                 source={data.src}
                 useNativeControls
-                resizeMode="contain"
+                resizeMode="cover"
                 isLooping
                 onPlaybackStatusUpdate={setStatus}
                 onFullscreenUpdate={setOrientation}
