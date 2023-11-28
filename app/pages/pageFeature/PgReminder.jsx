@@ -5,6 +5,7 @@ import AppCalendar from "../../components/AppCalendar";
 
 export default function PgReminder() {
   const statusBarHeight = StatusBar.currentHeight || 0;
+
   const cermat = () => {
     Navigation.navigate("App");
     console.log("first");

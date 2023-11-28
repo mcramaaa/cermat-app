@@ -4,16 +4,51 @@ import { LinearGradient } from "expo-linear-gradient";
 import AppButton from "./AppButton";
 import { useUser } from "../hook/useUser.zustand";
 import { useNavigation } from "@react-navigation/native";
+import * as SQLite from "expo-sqlite";
 
 export default function SetFirstName() {
   const { user, setUser } = useUser();
-  const [userName, setUserName] = useState(user.name);
+  const [userName, setUserName] = useState("");
+  const db = SQLite.openDatabase("cermat.db");
+
   const navigation = useNavigation();
+
+  function createUser() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `INSERT INTO users (name) values (?)`,
+          [userName],
+          (_, { insertId, rowsAffected }) => {
+            resolve({ insertId: insertId, rowsAffected: rowsAffected });
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
   const handleSubmitName = () => {
     console.log(userName);
     Keyboard.dismiss();
-    navigation.navigate("App");
+    createUser()
+      .then((res) => {
+        if (res.rowsAffected === 1) {
+          setUser({ id: res.insertId, name: userName });
+          navigation.navigate("App");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  function handleOnChange(value) {
+    setUserName(value);
+  }
+
   return (
     <LinearGradient
       colors={["#9BACF1", "#ffffff"]}
@@ -44,7 +79,7 @@ export default function SetFirstName() {
             marginTop: 5,
             paddingHorizontal: 10,
           }}
-          onChangeText={setUserName}
+          onChangeText={handleOnChange}
         />
         <AppButton
           height={40}
