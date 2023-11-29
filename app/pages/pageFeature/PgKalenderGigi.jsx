@@ -10,60 +10,75 @@ import sixTeenMonth from "../../../assets/gigi/sixTeenMonth.svg";
 import eightTeenMonth from "../../../assets/gigi/eightTeenMonth.svg";
 import twentyFourMonth from "../../../assets/gigi/twentyFourMonth.svg";
 import Slider from "@react-native-community/slider";
-// import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function PgKalenderGigi() {
+  const dataGigi = [
+    {
+      id: 6,
+      src: sixMonth,
+    },
+    {
+      id: 8,
+      src: eightMonth,
+    },
+    {
+      id: 10,
+      src: tenMonth,
+    },
+    {
+      id: 12,
+      src: twelveMonth,
+    },
+    {
+      id: 16,
+      src: sixTeenMonth,
+    },
+    {
+      id: 18,
+      src: eightTeenMonth,
+    },
+    {
+      id: 23,
+      src: twentyFourMonth,
+    },
+  ];
+
   const screenHeight = Dimensions.get("window").height;
   const statusBarHeight = StatusBar.currentHeight || 0;
   const cermat = () => {
     Navigation.navigate("App");
     console.log("first");
   };
+  const [imageSource, setImageSource] = useState({});
+
+  console.log(imageSource);
 
   const [sliderValue, setSliderValue] = useState(0);
   const handleSliderValue = (value) => {
     const roundedValue = Math.round(value);
     setSliderValue(roundedValue);
+    dataGigi.map((data, i) => {
+      if (sliderValue >= data.id) {
+        setImageSource((oldValue) => ({
+          ...oldValue,
+          [data.src]: {
+            src: data.src,
+            opacity: 1,
+          },
+        }));
+      } else if (sliderValue < data.id) {
+        setImageSource((oldValue) => ({
+          ...oldValue,
+          [data.src]: {
+            src: data.src,
+            opacity: 0,
+          },
+        }));
+      }
+    });
+
     console.log(sliderValue);
   };
-
-  const gigiImage = [
-    {
-      id: 6,
-      src: sixMonth,
-      opacity: 0,
-    },
-    {
-      id: 8,
-      src: eightMonth,
-      opacity: 0,
-    },
-    {
-      id: 10,
-      src: tenMonth,
-      opacity: 0,
-    },
-    {
-      id: 12,
-      src: twelveMonth,
-      opacity: 0,
-    },
-    {
-      id: 16,
-      src: sixTeenMonth,
-      opacity: 0,
-    },
-    {
-      id: 18,
-      src: eightTeenMonth,
-      opacity: 0,
-    },
-    {
-      id: 24,
-      src: twentyFourMonth,
-      opacity: 0,
-    },
-  ];
 
   return (
     <View
@@ -110,13 +125,13 @@ export default function PgKalenderGigi() {
           }}
         >
           <Image source={jaw} style={{ width: 400, height: 400 }} />
-          {gigiImage.map((data, index) => (
+          {Object.entries(imageSource).map(([key, data], i) => (
             <Image
-              key={index}
+              key={i}
               source={data.src}
               style={{
-                width: 360,
-                height: 360,
+                width: 400,
+                height: 400,
                 position: "absolute",
                 opacity: data.opacity,
               }}
