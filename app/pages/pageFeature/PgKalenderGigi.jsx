@@ -38,7 +38,7 @@ export default function PgKalenderGigi() {
       src: eightTeenMonth,
     },
     {
-      id: 23,
+      id: 24,
       src: twentyFourMonth,
     },
   ];
