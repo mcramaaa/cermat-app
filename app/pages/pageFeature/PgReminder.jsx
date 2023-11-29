@@ -173,7 +173,8 @@ export default function PgReminder() {
         Notifications.addNotificationResponseReceivedListener((response) => {
           console.log("data", response.notification.request.content);
           if (response.notification.request.content.data.screen === "default") {
-            navigation.navigate("PanduanFromNotif");
+            // navigation.navigate("");
+            console.log("cok");
           }
         });
       getAlarmData()
