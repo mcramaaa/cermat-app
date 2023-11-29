@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#9BACF1"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -29,8 +27,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "4d2d32d5-0fd3-478a-b430-7b66271a86d2"
+        "projectId": "5e97bb4e-8f78-4f79-9601-d88e3c691ab3"
       }
-    }
+    },
+    "owner": "mchrama"
   }
 }
