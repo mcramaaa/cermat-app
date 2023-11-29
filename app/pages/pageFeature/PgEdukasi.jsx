@@ -19,7 +19,7 @@ export default function PgEdukasi() {
   ];
 
   const video = React.useRef(null);
-  const secondVideo = React.useRef(null);
+  // const secondVideo = React.useRef(null);
   const [status, setStatus] = React.useState({});
 
   function setOrientation() {

@@ -12,19 +12,23 @@ export default function Panduan() {
     },
     {
       src: require("../../assets/videos/step/step2.mp4"),
-      note: "Gerakan sikat gigi pada gigi depan dengan sudut 45 derajat dari sisi merah",
+      note: "Gerakan sikat gigi dengan gerakan memutar",
     },
     {
       src: require("../../assets/videos/step/step3.mp4"),
-      note: "Gosok Gigi Kanan Ke kiri untuk membersihkan sela sela gigi",
+      note: "Sikat bagian dalam gigi kalian",
     },
     {
       src: require("../../assets/videos/step/step4.mp4"),
-      note: "Gerakan sikat gigi pada gigi belakang dengan menarik dari depan ke belakang pada permukaan",
+      note: "Sikat gigi dengan gerakan maju mundur",
     },
     {
       src: require("../../assets/videos/step/step5.mp4"),
-      note: "Sikat pula lidah secara perlahan",
+      note: "Bersihkan bagian dalam gigi dan lidah kalian",
+    },
+    {
+      src: require("../../assets/videos/step/step6.mp4"),
+      note: "Kumur-kumur dan Bilas mulut dengan air bersih",
     },
   ];
   return (
