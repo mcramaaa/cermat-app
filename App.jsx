@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import { useFonts } from "expo-font";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -261,13 +261,7 @@ export default function App() {
           <Stack.Screen
             name="Keluhan"
             component={Keluhan}
-            options={{
-              headerTitleStyle: { display: "none" },
-              headerTransparent: true,
-              headerBackImage: () => (
-                <Ionicons name="arrow-back-outline" size={35} color="white" />
-              ),
-            }}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -8,10 +8,11 @@ export default function KalenderGigi({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <LinearGradient
-        colors={["#9BACF1", "#B9DFE2"]}
+        colors={["#9BACF1", "#9BACF1"]}
         style={{
           height: 200,
-          maxWidth: 350,
+          minWidth: 350,
+          maxWidth: 450,
           borderRadius: 15,
           backgroundColor: "#9BACF1",
           padding: 15,
@@ -40,7 +41,9 @@ export default function KalenderGigi({ onPress }) {
           </Text>
         </View>
         <View style={{ justifyContent: "center" }}>
-          <Text>Yuk Rawat gigimu dan sikat gigi teratur</Text>
+          <Text style={{ fontFamily: "Poppins-Medium", color: "white" }}>
+            Lihat urutan pertumbuhan{"\n"}gigi susu hingga permanen
+          </Text>
         </View>
         <View
           style={{
