@@ -1,4 +1,11 @@
-import { View, ScrollView, StatusBar, Text, Dimensions } from "react-native";
+import {
+  View,
+  ScrollView,
+  StatusBar,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import { Image } from "expo-image";
 import jaw from "../../../assets/gigi/Jaw.svg";
@@ -10,6 +17,9 @@ import sixTeenMonth from "../../../assets/gigi/sixTeenMonth.svg";
 import eightTeenMonth from "../../../assets/gigi/eightTeenMonth.svg";
 import twentyFourMonth from "../../../assets/gigi/twentyFourMonth.svg";
 import Slider from "@react-native-community/slider";
+import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function PgKalenderGigi() {
   const dataGigi = [
@@ -45,13 +55,8 @@ export default function PgKalenderGigi() {
 
   const screenHeight = Dimensions.get("window").height;
   const statusBarHeight = StatusBar.currentHeight || 0;
-  const cermat = () => {
-    Navigation.navigate("App");
-    console.log("first");
-  };
-  const [imageSource, setImageSource] = useState({});
 
-  console.log(imageSource);
+  const [imageSource, setImageSource] = useState({});
 
   const [sliderValue, setSliderValue] = useState(0);
   const handleSliderValue = (value) => {
@@ -76,8 +81,11 @@ export default function PgKalenderGigi() {
         }));
       }
     });
+  };
 
-    console.log(sliderValue);
+  const Navigation = useNavigation();
+  const InputAnak = () => {
+    Navigation.navigate("DataAnak");
   };
 
   return (
@@ -117,6 +125,31 @@ export default function PgKalenderGigi() {
           justifyContent: "center",
         }}
       >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: 20,
+            alignItems: "center",
+            position: "absolute",
+            height: 50,
+            width: "100%",
+            top: 0,
+            backgroundColor: "#e1e4f0",
+          }}
+        >
+          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+            <MaterialIcons name="child-care" size={35} color="black" />
+            <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 20 }}>
+              Nama Anak
+              {/* jika tidak ada maka ditulis Data Anak belum ada */}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={InputAnak}>
+            <AntDesign name="pluscircleo" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+
         <View
           style={{
             justifyContent: "center",
@@ -164,7 +197,6 @@ export default function PgKalenderGigi() {
           value={sliderValue}
           onValueChange={handleSliderValue}
           tapToSeek={true}
-          // thumbImage={<FontAwesome5 name="tooth" size={24} color="black" />}
         />
         <Text style={{ color: "black" }}>{sliderValue} bulan</Text>
       </View>

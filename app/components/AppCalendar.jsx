@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import {
   dayNames,
@@ -46,6 +46,7 @@ export default function AppCalendar() {
   };
 
   const [isCrud, setIsCrud] = useState(0);
+  console.log(isCrud);
 
   function createReport() {
     const todayString = getTodayString();
@@ -133,7 +134,8 @@ export default function AppCalendar() {
         padding: 15,
         borderRadius: 15,
         marginTop: 20,
-        elevation: 4,
+        borderWidth: 0.5,
+        borderColor: "#9BACF1",
       }}
     >
       <View

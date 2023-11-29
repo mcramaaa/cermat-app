@@ -15,6 +15,7 @@ import Keluhan from "./app/components/Keluhan";
 import * as SQLite from "expo-sqlite";
 import { useEffect, useState } from "react";
 import { useUser } from "./app/hook/useUser.zustand";
+import DataAnakList from "./app/pages/pageFeature/DataAnakList";
 
 const Stack = createStackNavigator();
 
@@ -245,6 +246,13 @@ export default function App() {
               headerBackImage: () => (
                 <Ionicons name="arrow-back-outline" size={35} color="white" />
               ),
+            }}
+          />
+          <Stack.Screen
+            name="DataAnak"
+            component={DataAnakList}
+            options={{
+              title: "Data Anak",
             }}
           />
           <Stack.Screen

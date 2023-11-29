@@ -174,7 +174,7 @@ export default function PgReminder() {
           console.log("data", response.notification.request.content);
           if (response.notification.request.content.data.screen === "default") {
             // navigation.navigate("");
-            console.log("cok");
+            console.log("Astagfirullah");
           }
         });
       getAlarmData()
@@ -237,7 +237,7 @@ export default function PgReminder() {
           overflow: "hidden",
         }}
       >
-        <View style={{ gap: 25, paddingBottom: 170 }}>
+        <View style={{ gap: 10, paddingBottom: 170 }}>
           {/* <AlarmBox /> */}
           {alarmData.map((data, key) => (
             <AlarmBox
