@@ -10,7 +10,7 @@ export default function Reminder({ onPress }) {
         colors={["#9BACF1", "#9BACF1"]}
         style={{
           height: 200,
-          minWidth: 350,
+          minWidth: 320,
           maxWidth: 450,
           borderRadius: 15,
           backgroundColor: "#9BACF1",

@@ -51,7 +51,7 @@ export default function Cermat() {
           borderTopLeftRadius: 20,
           paddingTop: 27,
           // marginTop: 130,
-          paddingHorizontal: 25,
+          // paddingHorizontal: 25,
           overflow: "hidden",
         }}
       >
@@ -60,7 +60,8 @@ export default function Cermat() {
             gap: 25,
             paddingBottom: 170,
             alignItems: "center",
-            paddingHorizontal: 10,
+            marginHorizontal: 10,
+            // paddingHorizontal: 10,
           }}
         >
           <Edukasi onPress={goEdukasi} />
