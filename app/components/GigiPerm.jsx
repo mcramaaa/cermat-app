@@ -1,5 +1,5 @@
 import { View, Text, Dimensions } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
 import jaw from "../../assets/gigiPerm/jaw.svg";
 import sixYear from "../../assets/gigiPerm/sixYear.svg";
@@ -11,8 +11,34 @@ import elevenYear from "../../assets/gigiPerm/elevenYear.svg";
 import twelveYear from "../../assets/gigiPerm/twelveYear.svg";
 import sevenTeenYear from "../../assets/gigiPerm/sevenTeenYear.svg";
 import Slider from "@react-native-community/slider";
+import { useFocusEffect } from "@react-navigation/native";
 
-export default function GigiPerm({ display }) {
+export default function GigiPerm({ display, yearRange }) {
+  useFocusEffect(
+    useCallback(() => {
+      dataGigi.map((data, i) => {
+        if (yearRange >= data.id) {
+          setImageSource((oldValue) => ({
+            ...oldValue,
+            [data.src]: {
+              src: data.src,
+              opacity: 1,
+            },
+          }));
+        } else if (yearRange < data.id) {
+          setImageSource((oldValue) => ({
+            ...oldValue,
+            [data.src]: {
+              src: data.src,
+              opacity: 0,
+            },
+          }));
+        }
+      });
+
+      setSliderValue(yearRange);
+    }, [])
+  );
   const dataGigi = [
     {
       id: 6,

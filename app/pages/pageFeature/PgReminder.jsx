@@ -33,7 +33,6 @@ export default function PgReminder() {
 
   const cermat = () => {
     Navigation.navigate("App");
-    console.log("first");
   };
 
   const db = SQLite.openDatabase("cermat.db");
@@ -52,7 +51,6 @@ export default function PgReminder() {
           [],
           (_, { rows }) => {
             const alarmRows = rows._array;
-            console.log(alarmRows);
             resolve(alarmRows);
           },
           (error) => {
@@ -110,7 +108,6 @@ export default function PgReminder() {
           projectId: "5e97bb4e-8f78-4f79-9601-d88e3c691ab3",
         })
       ).data;
-      console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
