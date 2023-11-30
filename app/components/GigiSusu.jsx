@@ -125,6 +125,7 @@ export default function GigiSusu({ display }) {
           value={sliderValue}
           onValueChange={handleSliderValue}
           tapToSeek={true}
+          thumbStyle={{ width: 40, height: 40 }}
         />
         <Text style={{ color: "black" }}>{sliderValue} bulan</Text>
       </View>
