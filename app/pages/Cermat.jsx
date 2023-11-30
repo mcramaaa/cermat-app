@@ -11,12 +11,15 @@ import Edukasi from "../components/cermatBtn/Edukasi";
 import KalenderGigi from "../components/cermatBtn/KalenderGigi";
 import Monitoring from "../components/cermatBtn/Monitoring";
 import { useNavigation } from "@react-navigation/native";
-// import { TouchableOpacity } from "react-native-gesture-handler";
+import Carousel from "../components/cermatBtn/Carousel";
 
 export default function Cermat() {
   const Navigation = useNavigation();
   const statusBarHeight = StatusBar.currentHeight || 0;
 
+  const goCarousel = () => {
+    Navigation.navigate("PgCarousel");
+  };
   const goEdukasi = () => {
     Navigation.navigate("PgEdukasi");
   };
@@ -64,6 +67,7 @@ export default function Cermat() {
             // paddingHorizontal: 10,
           }}
         >
+          <Carousel onPress={goCarousel} />
           <Edukasi onPress={goEdukasi} />
           <Reminder onPress={goReminder} />
           <KalenderGigi onPress={goKalenderGigi} />

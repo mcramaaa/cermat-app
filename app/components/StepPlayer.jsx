@@ -15,9 +15,7 @@ const StepPlayer = ({ source, style }) => {
     })();
   }, []);
 
-  return (
-    <Video ref={videoRef} style={{ ...style }} resizeMode="contain" audi />
-  );
+  return <Video ref={videoRef} style={{ ...style }} resizeMode="contain" />;
 };
 
 export default StepPlayer;

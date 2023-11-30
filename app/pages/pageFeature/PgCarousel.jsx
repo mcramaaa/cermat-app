@@ -4,34 +4,39 @@ import React, { useEffect } from "react";
 import * as ScreenOrientation from "expo-screen-orientation";
 import StepPlayer from "../../components/StepPlayer";
 
-export default function PgEdukasi() {
+export default function PgCarousel() {
   const statusBarHeight = StatusBar.currentHeight || 0;
 
-  const dataVideo = [
+  const dataCarousel = [
     {
-      src: require("../../../assets/videos/FilmAnimasi.mp4"),
-      name: "Film Animasi Pendek Gigi dan Kuman",
+      src: require("../../../assets/videos/carousel/1.mp4"),
+      note: "Tuangkan Pasta gigi pada sikat gigi sebesar biji jagung",
     },
-
     {
-      src: require("../../../assets/videos/VideoEdukasi.mp4"),
-      name: "Video Edukasi Karies Gigi",
+      src: require("../../../assets/videos/carousel/2.mp4"),
+      note: "Gerakan sikat gigi dengan gerakan memutar",
+    },
+    {
+      src: require("../../../assets/videos/carousel/3.mp4"),
+      note: "Sikat bagian dalam gigi kalian",
+    },
+    {
+      src: require("../../../assets/videos/carousel/4.mp4"),
+      note: "Sikat gigi dengan gerakan maju mundur",
+    },
+    {
+      src: require("../../../assets/videos/carousel/5.mp4"),
+      note: "Bersihkan bagian dalam gigi dan lidah kalian",
+    },
+    {
+      src: require("../../../assets/videos/carousel/6.mp4"),
+      note: "Kumur-kumur dan Bilas mulut dengan air bersih",
+    },
+    {
+      src: require("../../../assets/videos/carousel/7.mp4"),
+      note: "Kumur-kumur dan Bilas mulut dengan air bersih",
     },
   ];
-
-  const video = React.useRef(null);
-  // const secondVideo = React.useRef(null);
-  const [status, setStatus] = React.useState({});
-
-  function setOrientation() {
-    if (Dimensions.get("window").height > Dimensions.get("window").width) {
-      //Device is in portrait mode, rotate to landscape mode.
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    } else {
-      //Device is in landscape mode, rotate to portrait mode.
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }
-  }
 
   return (
     <View
@@ -53,7 +58,7 @@ export default function PgEdukasi() {
             elevation: 5,
           }}
         >
-          Video Edukasi
+          Presistensi Gigi
         </Text>
       </View>
       <ScrollView
@@ -68,11 +73,11 @@ export default function PgEdukasi() {
         }}
       >
         <View style={{ gap: 25, paddingBottom: 170 }}>
-          {dataVideo.map((data, idx) => (
+          {dataCarousel.map((data, idx) => (
             <View
               key={idx}
               style={{
-                width: "100%",
+                // width: "100%",
                 backgroundColor: "white",
                 elevation: 3,
                 overflow: "hidden",
@@ -92,15 +97,9 @@ export default function PgEdukasi() {
               >
                 {data.name}
               </Text>
-              <Video
-                ref={video}
-                style={{ height: 220, width: "100%" }}
+              <StepPlayer
                 source={data.src}
-                useNativeControls
-                resizeMode="cover"
-                isLooping
-                onPlaybackStatusUpdate={setStatus}
-                onFullscreenUpdate={setOrientation}
+                style={{ width: "auto", height: 300 }}
               />
             </View>
           ))}
