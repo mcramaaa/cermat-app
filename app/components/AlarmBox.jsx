@@ -94,11 +94,10 @@ export default function AlarmBox({
     <View
       style={{
         marginTop: 20,
-        backgroundColor: "white",
+        backgroundColor: "#e1e4f0",
         height: "auto",
         padding: 10,
         borderRadius: 15,
-        elevation: 10,
         justifyContent: "space-between",
         alignItems: "center",
         flexDirection: "row",
@@ -127,7 +126,7 @@ export default function AlarmBox({
           style={{
             fontSize: 40,
             fontFamily: "Poppins-Bold",
-            color: "#1AA7EC",
+            color: "#9BACF1",
             marginBottom: -15,
             marginTop: -10,
           }}
@@ -143,7 +142,7 @@ export default function AlarmBox({
       <TouchableOpacity
         onPress={showTimepicker}
         style={{
-          backgroundColor: "#1AA7EC",
+          backgroundColor: "#9BACF1",
           paddingHorizontal: 20,
           borderRadius: 10,
         }}

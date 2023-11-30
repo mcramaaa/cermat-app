@@ -81,6 +81,7 @@ const Profile = () => {
           defaultValue=""
         />
         <AppButton
+          marginTop={15}
           height={40}
           width={150}
           tittle="Simpan"
