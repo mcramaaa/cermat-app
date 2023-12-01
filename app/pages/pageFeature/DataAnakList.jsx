@@ -21,14 +21,8 @@ const DataAnakList = () => {
     name: "",
     birthDay: "",
   });
-  /**
-   *
-   */
-
-  /**
-   *
-   */
-  console.log(payload);
+  const [thiId, setThiId] = useState();
+  const [isUpdate, setIsUpdate] = useState(false);
   const [isCrud, setIsCrud] = useState(1);
 
   const [date, setDate] = useState(new Date());
@@ -106,6 +100,74 @@ const DataAnakList = () => {
     });
   }
 
+  function editAnak() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `update childs set name = ?, birthday = ? where id = ?`,
+          [payload.name, payload.birthDay, thiId],
+          (_, { insertId, rowsAffected }) => {
+            resolve({ insertId: insertId, rowsAffected: rowsAffected });
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  function deleteAnak() {
+    if (thiId) {
+      console.log("here", thiId);
+      return new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+          tx.executeSql(
+            `delete from childs where id = ?`,
+            [thiId],
+            (_, { insertId, rowsAffected }) => {
+              if (rowsAffected > 0) {
+                setShow(false);
+                setPayload({
+                  name: "",
+                  birthDay: "",
+                });
+                setDate(new Date());
+                setIsUpdate(false);
+                setIsCrud((oldValue) => oldValue + 1);
+              }
+              resolve({ insertId: insertId, rowsAffected: rowsAffected });
+            },
+            (error) => {
+              reject(error);
+            }
+          );
+        });
+      });
+    }
+  }
+
+  function getAnakById(id) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `select * from childs where id = ?`,
+          [id],
+          (_, { rows }) => {
+            const anak = rows._array;
+            setPayload({ name: anak[0].name, birthDay: anak[0].birthday });
+            setDate(new Date(anak[0].birthday));
+            setThiId(anak[0].id);
+            resolve(anak);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
   function getAnak() {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
@@ -136,14 +198,31 @@ const DataAnakList = () => {
 
   function submitAnak() {
     Keyboard.dismiss();
-    createAnak()
-      .then((res) => {
-        if (res.rowsAffected > 0) {
+    if (!isUpdate) {
+      if (!payload) return;
+      createAnak()
+        .then((res) => {
+          if (res.rowsAffected > 0) {
+            setShow(false);
+            setIsCrud((oldValue) => oldValue + 1);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    if (isUpdate) {
+      editAnak()
+        .then(() => {
           setShow(false);
+          setPayload({
+            name: "",
+            birthDay: "",
+          });
+          setDate(new Date());
+          setIsUpdate(false);
           setIsCrud((oldValue) => oldValue + 1);
-        }
-      })
-      .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   function openDatePicker() {
@@ -177,7 +256,6 @@ const DataAnakList = () => {
         });
     }, [isCrud])
   );
-
   const choose = () => {
     Navigation.navigate("PgKalenderGigi");
   };
@@ -247,6 +325,11 @@ const DataAnakList = () => {
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Text>{data.birthday.slice(0, -15)}</Text>
                   <TouchableOpacity
+                    onPress={() => {
+                      addAnak();
+                      setIsUpdate(true);
+                      getAnakById(data.id);
+                    }}
                     style={{
                       backgroundColor: "white",
                       alignItems: "center",
@@ -327,7 +410,7 @@ const DataAnakList = () => {
                 fontSize: 17,
               }}
               onChangeText={(value) => setPayload({ ...payload, name: value })}
-              defaultValue=""
+              defaultValue={payload.name}
             />
 
             <Text
@@ -366,7 +449,7 @@ const DataAnakList = () => {
                   textAlign: "left",
                 }}
               >
-                {`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}
+                {`${date.toLocaleDateString("id-ID").replace(/\//g, "-")}`}
               </Text>
               <TouchableOpacity
                 onPress={openDatePicker}
@@ -394,7 +477,15 @@ const DataAnakList = () => {
               }}
             >
               <TouchableOpacity
-                onPress={cancelAdd}
+                onPress={() => {
+                  cancelAdd();
+                  setIsUpdate(false);
+                  setPayload({
+                    name: "",
+                    birthDay: "",
+                  });
+                  setDate(new Date());
+                }}
                 true
                 style={{
                   backgroundColor: "pink",
@@ -444,9 +535,15 @@ const DataAnakList = () => {
             </View>
 
             {/* TOMBOL HAPUS */}
-            <View style={{ alignItems: "center", marginTop: 20, display: "" }}>
+            <View
+              style={{
+                alignItems: "center",
+                marginTop: 20,
+                display: isUpdate ? "" : "none",
+              }}
+            >
               <TouchableOpacity
-                // onPress={} HAPUS
+                onPress={deleteAnak}
                 style={{
                   backgroundColor: "red",
                   paddingHorizontal: 5,
