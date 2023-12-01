@@ -165,6 +165,16 @@ export default function App() {
         }
       );
       tx.executeSql(
+        "DELETE FROM childs",
+        [],
+        (_, result) => {
+          console.log("Table emptied successfully");
+        },
+        (error) => {
+          console.error("Error while emptying the table:", error);
+        }
+      );
+      tx.executeSql(
         "DELETE FROM reports",
         [],
         (_, result) => {
@@ -204,7 +214,6 @@ export default function App() {
     getUserData()
       .then((userRows) => {
         if (userRows.length > 0) {
-          console.log(userRows);
           setUser({ id: userRows[0].id, name: userRows[0].name });
           // setIsUserSet(true);
         }

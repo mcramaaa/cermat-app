@@ -18,6 +18,8 @@ export default function PgKalenderGigi() {
     setIsLoadingMonthRange(true);
   };
 
+  const [namaAnak, setNamaAnak] = useState("-");
+
   const [show, setShow] = useState(true);
   const [monthRange, setMonthRange] = useState(0);
   const [yearRange, setYearRange] = useState(1);
@@ -111,8 +113,10 @@ export default function PgKalenderGigi() {
       getAnak()
         .then((anakRows) => {
           if (anakRows.length > 0) {
+            setNamaAnak(anakRows[0].name);
             getDifferent(anakRows[0].birthday);
           }
+          setIsLoadingMonthRange(false);
         })
         .catch((error) => {
           console.error(error);
@@ -177,7 +181,7 @@ export default function PgKalenderGigi() {
           <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
             <MaterialIcons name="child-care" size={35} color="black" />
             <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 20 }}>
-              Nama Anak
+              {namaAnak}
               {/* jika tidak ada maka ditulis Data Anak belum ada */}
             </Text>
           </View>
@@ -210,7 +214,7 @@ export default function PgKalenderGigi() {
 
         <View>
           {isLoadingMonthRange ? (
-            <Text>Loading</Text>
+            <Text></Text>
           ) : (
             <GigiSusu
               display={show === true ? "" : "none"}
@@ -218,7 +222,7 @@ export default function PgKalenderGigi() {
             />
           )}
           {isLoadingMonthRange ? (
-            <Text>Loading</Text>
+            <Text></Text>
           ) : (
             <GigiPerm
               display={show === false ? "" : "none"}
