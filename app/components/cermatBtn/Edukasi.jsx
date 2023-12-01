@@ -7,11 +7,10 @@ import { AntDesign } from "@expo/vector-icons";
 export default function Edukasi({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
-      <LinearGradient
-        colors={["#9BACF1", "#9BACF1"]}
+      <View
         style={{
           height: 200,
-          minWidth: 350,
+          minWidth: 320,
           maxWidth: 450,
           borderRadius: 15,
           backgroundColor: "#9BACF1",
@@ -58,7 +57,7 @@ export default function Edukasi({ onPress }) {
           </Text>
           <AntDesign name="arrowright" size={15} color="black" />
         </View>
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 }

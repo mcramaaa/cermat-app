@@ -16,6 +16,7 @@ import * as SQLite from "expo-sqlite";
 import { useEffect, useState } from "react";
 import { useUser } from "./app/hook/useUser.zustand";
 import DataAnakList from "./app/pages/pageFeature/DataAnakList";
+import PgCarousel from "./app/pages/pageFeature/PgCarousel";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,16 @@ export default function App() {
         "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL);",
         [],
         () => console.log("Users Table created successfully"),
+        (error) => {
+          if (error) {
+            console.error("Error creating table: ", error);
+          }
+        }
+      );
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS childs (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, birthday datetime(6) NOT NULL, is_active BOOLEAN default false);",
+        [],
+        () => console.log("Childs Table created successfully"),
         (error) => {
           if (error) {
             console.error("Error creating table: ", error);
@@ -154,7 +165,32 @@ export default function App() {
         }
       );
       tx.executeSql(
+        "DELETE FROM childs",
+        [],
+        (_, result) => {
+          console.log("Table emptied successfully");
+        },
+        (error) => {
+          console.error("Error while emptying the table:", error);
+        }
+      );
+      tx.executeSql(
         "DELETE FROM reports",
+        [],
+        (_, result) => {
+          console.log("Table emptied successfully");
+        },
+        (error) => {
+          console.error("Error while emptying the table:", error);
+        }
+      );
+    });
+  };
+
+  const dropTable = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DROP TABLE childs",
         [],
         (_, result) => {
           console.log("Table emptied successfully");
@@ -178,7 +214,6 @@ export default function App() {
     getUserData()
       .then((userRows) => {
         if (userRows.length > 0) {
-          console.log(userRows);
           setUser({ id: userRows[0].id, name: userRows[0].name });
           // setIsUserSet(true);
         }
@@ -217,6 +252,17 @@ export default function App() {
           <Stack.Screen
             name="PgEdukasi"
             component={PgEdukasi}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="PgCarousel"
+            component={PgCarousel}
             options={{
               headerTitleStyle: { display: "none" },
               headerTransparent: true,

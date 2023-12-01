@@ -6,30 +6,127 @@ import {
   TextInput,
   Keyboard,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import * as SQLite from "expo-sqlite";
+import { useFocusEffect } from "@react-navigation/native";
 
 const DataAnakList = () => {
-  const dataAnak = [
-    {
-      id: 1,
-      Nama: "Anak1",
-      TanggalLahir: "27-12-2023",
-    },
-    {
-      id: 2,
-      Nama: "Anak2",
-      TanggalLahir: "27-01-2023",
-    },
-  ];
+  const db = SQLite.openDatabase("cermat.db");
+  const [payload, setPayload] = useState({
+    name: "",
+    birthDay: "",
+  });
+  /**
+   *
+   */
+
+  /**
+   *
+   */
+  console.log(payload);
+  const [isCrud, setIsCrud] = useState(1);
+
+  const [date, setDate] = useState(new Date());
+  const [showDate, setShowDate] = useState(false);
+  const [anaks, setAnaks] = useState([]);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    const isoDate = new Date(currentDate);
+
+    const year = isoDate.getUTCFullYear();
+    const month = isoDate.getMonth() + 1;
+    const day = isoDate.getUTCDate();
+    const hours = isoDate.getHours();
+    const minutes = isoDate.getMinutes();
+    const seconds = isoDate.getSeconds();
+    const milliseconds = "000000";
+
+    const newDateString = `${year}-${month < 10 ? "0" : ""}${month}-${
+      day < 10 ? "0" : ""
+    }${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+
+    setShowDate(false);
+    setDate(currentDate);
+    setPayload({ ...payload, birthDay: newDateString });
+  };
+
+  function updateAnak(id) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `UPDATE childs set is_active = 0`,
+          [],
+          (_, { insertId, rowsAffected }) => {
+            if (rowsAffected > 0) {
+              setIsCrud((oldValue) => oldValue + 1);
+            }
+            resolve({ insertId: insertId, rowsAffected: rowsAffected });
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+        tx.executeSql(
+          `UPDATE childs set is_active = 1 WHERE id = ?`,
+          [id],
+          (_, { insertId, rowsAffected }) => {
+            if (rowsAffected > 0) {
+              setIsCrud((oldValue) => oldValue + 1);
+            }
+            resolve({ insertId: insertId, rowsAffected: rowsAffected });
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  function createAnak() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `INSERT INTO childs (name, birthday) values (?, ?)`,
+          [payload.name, payload.birthDay],
+          (_, { insertId, rowsAffected }) => {
+            resolve({ insertId: insertId, rowsAffected: rowsAffected });
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  function getAnak() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM childs",
+          [],
+          (_, { rows }) => {
+            const userRows = rows._array;
+            resolve(userRows);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
 
   const lahirAnak = "27-10-2023";
   const [show, setShow] = useState(false);
 
   const addAnak = () => {
     setShow(true);
-    console.log(show);
   };
 
   const cancelAdd = () => {
@@ -37,14 +134,48 @@ const DataAnakList = () => {
   };
 
   function submitAnak() {
-    console.log("submit anak");
     Keyboard.dismiss();
-    setShow(false);
+    createAnak()
+      .then((res) => {
+        if (res.rowsAffected > 0) {
+          setShow(false);
+          setIsCrud((oldValue) => oldValue + 1);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   function openDatePicker() {
-    console.log("Buka Date Picker");
+    setShowDate(true);
   }
+  useFocusEffect(
+    useCallback(() => {
+      if (payload.birthDay == "") {
+        const isoDate = new Date();
+        const year = isoDate.getUTCFullYear();
+        const month = isoDate.getMonth() + 1;
+        const day = isoDate.getUTCDate();
+        const hours = isoDate.getHours();
+        const minutes = isoDate.getMinutes();
+        const seconds = isoDate.getSeconds();
+        const milliseconds = "000000";
+
+        const newDateString = `${year}-${month < 10 ? "0" : ""}${month}-${
+          day < 10 ? "0" : ""
+        }${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+        setPayload({ ...payload, birthDay: newDateString });
+      }
+      getAnak()
+        .then((anakRows) => {
+          if (anakRows.length > 0) {
+            setAnaks(anakRows);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, [isCrud])
+  );
   return (
     <LinearGradient
       colors={["#9BACF1", "#ffffff"]}
@@ -76,12 +207,13 @@ const DataAnakList = () => {
               padding: 20,
             }}
           >
-            {dataAnak.map((data, index) => (
+            {anaks.map((data, index) => (
               <TouchableOpacity
+                onPress={() => updateAnak(data.id)}
                 key={index}
                 style={{
                   height: 50,
-                  backgroundColor: "#e1e4f0",
+                  backgroundColor: `${data.is_active ? "red" : "#e1e4f0"}`,
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -91,9 +223,9 @@ const DataAnakList = () => {
                 }}
               >
                 <Text style={{ fontSize: 20, fontFamily: "Poppins-Medium" }}>
-                  {data.Nama}
+                  {data.name}
                 </Text>
-                <Text>{data.TanggalLahir}</Text>
+                <Text>{data.birthday.slice(0, -15)}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -152,6 +284,7 @@ const DataAnakList = () => {
             <TextInput
               placeholder="Masukkan Nama Anak"
               style={{
+                padding: 10,
                 minWidth: 320,
                 maxWidth: 500,
                 borderRadius: 10,
@@ -160,7 +293,7 @@ const DataAnakList = () => {
                 paddingHorizontal: 15,
                 fontSize: 17,
               }}
-              // onChangeText={setName}
+              onChangeText={(value) => setPayload({ ...payload, name: value })}
               defaultValue=""
             />
 
@@ -182,6 +315,17 @@ const DataAnakList = () => {
                 justifyContent: "space-between",
               }}
             >
+              {showDate && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={"date"}
+                  // is24Hour={true}
+                  onChange={onChange}
+                  display="calendar"
+                  onTouchCancel={() => setShowDate(false)}
+                />
+              )}
               <Text
                 style={{
                   fontFamily: "Poppins-Medium",
@@ -189,7 +333,7 @@ const DataAnakList = () => {
                   textAlign: "left",
                 }}
               >
-                {lahirAnak}
+                {`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}
               </Text>
               <TouchableOpacity
                 onPress={openDatePicker}

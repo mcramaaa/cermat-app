@@ -24,7 +24,6 @@ const useAlarm = (navigation) => {
           [],
           (_, { rows }) => {
             const alarmRows = rows._array;
-            console.log(alarmRows);
             if (alarmRows.length > 0) {
               setAlarmData(alarmRows);
               resolve(alarmRows);
@@ -46,7 +45,6 @@ const useAlarm = (navigation) => {
           [tagParm, timeParam.split(":")[0], timeParam.split(":")[1]],
           (_, { insertId, rowsAffected }) => {
             if (rowsAffected > 0) {
-              console.log(rowsAffected);
               getAlarms();
               navigation.navigate("Alarm");
               resolve(rowsAffected, insertId);

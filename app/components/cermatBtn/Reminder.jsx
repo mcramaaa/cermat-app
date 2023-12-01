@@ -2,15 +2,17 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRemoinder } from "../../hook/useReminder.zustand";
 
 export default function Reminder({ onPress }) {
+  const { sikatGigi } = useRemoinder();
   return (
     <TouchableOpacity onPress={onPress}>
       <LinearGradient
         colors={["#9BACF1", "#9BACF1"]}
         style={{
           height: 200,
-          minWidth: 350,
+          minWidth: 320,
           maxWidth: 450,
           borderRadius: 15,
           backgroundColor: "#9BACF1",
@@ -56,9 +58,15 @@ export default function Reminder({ onPress }) {
             alignItems: "center",
           }}
         >
-          <Text style={{ fontFamily: "Poppins-Medium" }}>
-            Kamu sudah sikat gigi 1x hari ini
-          </Text>
+          {sikatGigi > 0 ? (
+            <Text style={{ fontFamily: "Poppins-Medium" }}>
+              Kamu sudah sikat gigi {sikatGigi}x hari ini
+            </Text>
+          ) : (
+            <Text style={{ fontFamily: "Poppins-Medium" }}>
+              Kamu belum sikat gigi hari ini
+            </Text>
+          )}
         </View>
       </LinearGradient>
     </TouchableOpacity>
