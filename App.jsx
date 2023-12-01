@@ -46,6 +46,16 @@ export default function App() {
         }
       );
       tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS childs (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, birthday datetime(6) NOT NULL, is_active BOOLEAN default false);",
+        [],
+        () => console.log("Childs Table created successfully"),
+        (error) => {
+          if (error) {
+            console.error("Error creating table: ", error);
+          }
+        }
+      );
+      tx.executeSql(
         "CREATE TABLE IF NOT EXISTS alarms (id INTEGER PRIMARY KEY AUTOINCREMENT, tag VARCHAR(255) NOT NULL, hours VARCHAR(255) NOT NULL, minute VARCHAR(255) NOT NULL);",
         [],
         () => setIsAlarmTable(true),
@@ -156,6 +166,21 @@ export default function App() {
       );
       tx.executeSql(
         "DELETE FROM reports",
+        [],
+        (_, result) => {
+          console.log("Table emptied successfully");
+        },
+        (error) => {
+          console.error("Error while emptying the table:", error);
+        }
+      );
+    });
+  };
+
+  const dropTable = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DROP TABLE childs",
         [],
         (_, result) => {
           console.log("Table emptied successfully");

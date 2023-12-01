@@ -1,21 +1,124 @@
 import { View, StatusBar, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import GigiSusu from "../../components/GigiSusu";
 import GigiPerm from "../../components/GigiPerm";
 import AppButton from "../../components/AppButton";
+import * as SQLite from "expo-sqlite";
 
 export default function PgKalenderGigi() {
+  const db = SQLite.openDatabase("cermat.db");
   const statusBarHeight = StatusBar.currentHeight || 0;
 
   const Navigation = useNavigation();
   const InputAnak = () => {
     Navigation.navigate("DataAnak");
+    setIsLoadingMonthRange(true);
   };
 
   const [show, setShow] = useState(true);
+  const [monthRange, setMonthRange] = useState(0);
+  const [yearRange, setYearRange] = useState(1);
+  const [isLoadingMonthRange, setIsLoadingMonthRange] = useState(true);
+
+  function getAnak() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM childs WHERE is_active = ?",
+          [true],
+          (_, { rows }) => {
+            const userRows = rows._array;
+            resolve(userRows);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  function getDifferent(birthday) {
+    const currentDate = new Date();
+    const dateObject = new Date(birthday.replace(" ", "T"));
+
+    const isoDateString = dateObject.toISOString();
+    const targetDate = new Date(isoDateString);
+
+    const dayDifference = Math.floor(
+      (currentDate - targetDate) / (24 * 60 * 60 * 1000)
+    );
+
+    const monthRanges = Array.from(
+      { length: Math.ceil(Math.abs(dayDifference) / 29) },
+      (_, index) => {
+        const startDate = new Date(targetDate);
+        const endDate = new Date(targetDate);
+
+        startDate.setDate(targetDate.getDate() + index * 30);
+        endDate.setDate(startDate.getDate() + 29);
+
+        if (endDate > currentDate) {
+          endDate.setDate(currentDate.getDate());
+        }
+
+        return {
+          start: startDate,
+          end: endDate,
+        };
+      }
+    );
+
+    // dataGigi.map((data, i) => {
+    //   if (monthRanges.length - 1 >= data.id) {
+    //     setImageSource((oldValue) => ({
+    //       ...oldValue,
+    //       [data.src]: {
+    //         src: data.src,
+    //         opacity: 1,
+    //       },
+    //     }));
+    //   } else if (monthRanges.length - 1 < data.id) {
+    //     setImageSource((oldValue) => ({
+    //       ...oldValue,
+    //       [data.src]: {
+    //         src: data.src,
+    //         opacity: 0,
+    //       },
+    //     }));
+    //   }
+    // });
+
+    // setSliderValue(monthRanges.length - 1);
+    setMonthRange(monthRanges.length - 1);
+    const year = Math.floor((monthRanges.length - 1) / 12);
+    if (year >= 6) {
+      setYearRange(year);
+      setShow(false);
+      setIsLoadingMonthRange(false);
+    }
+    if (year < 6) {
+      setShow(true);
+      setIsLoadingMonthRange(false);
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      getAnak()
+        .then((anakRows) => {
+          if (anakRows.length > 0) {
+            getDifferent(anakRows[0].birthday);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, [])
+  );
 
   return (
     <View
@@ -82,6 +185,7 @@ export default function PgKalenderGigi() {
             <AntDesign name="pluscircleo" size={24} color="black" />
           </TouchableOpacity>
         </View>
+
         <View
           style={{
             flexDirection: "row",
@@ -102,10 +206,29 @@ export default function PgKalenderGigi() {
             width={160}
             onPress={() => setShow(false)}
           />
+
+
+        <View>
+          {isLoadingMonthRange ? (
+            <Text>Loading</Text>
+          ) : (
+            <GigiSusu
+              display={show === true ? "" : "none"}
+              monthRange={monthRange}
+            />
+          )}
+          {isLoadingMonthRange ? (
+            <Text>Loading</Text>
+          ) : (
+            <GigiPerm
+              display={show === false ? "" : "none"}
+              yearRange={yearRange}
+            />
+          )}
+
         </View>
 
-        <GigiSusu display={show === true ? "" : "none"} />
-        <GigiPerm display={show === false ? "" : "none"} />
+       
       </View>
     </View>
   );

@@ -78,7 +78,6 @@ export default function AlarmBox({
               minute: Number(ltrimFirstZero(`${payload.minute}`)),
               identifier: `${payload.tag}`,
             });
-            console.log("ok");
           } else {
             reject(new Error("User not found"));
           }

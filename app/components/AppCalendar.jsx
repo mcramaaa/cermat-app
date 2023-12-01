@@ -10,6 +10,7 @@ import {
 import * as SQLite from "expo-sqlite";
 import { useFocusEffect } from "@react-navigation/native";
 import { getTodayString } from "../helpers/getTodayString";
+import { useRemoinder } from "../hook/useReminder.zustand";
 
 LocaleConfig.locales["fr"] = {
   monthNames: monthNames,
@@ -22,6 +23,7 @@ LocaleConfig.defaultLocale = "fr";
 
 export default function AppCalendar() {
   const db = SQLite.openDatabase("cermat.db");
+  const { setSikatGigi } = useRemoinder();
   const DotStyle = {
     width: 30,
     height: 30,
@@ -38,15 +40,16 @@ export default function AppCalendar() {
   });
   const sikatGigiSekaliBtn = () => {
     // console.log("sikat gigi sekali");
+    setSikatGigi(1);
     createReport();
   };
 
   const sikatGigiDuaKaliBtn = () => {
+    setSikatGigi(2);
     createReport();
   };
 
   const [isCrud, setIsCrud] = useState(0);
-  console.log(isCrud);
 
   function createReport() {
     const todayString = getTodayString();

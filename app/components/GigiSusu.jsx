@@ -1,5 +1,5 @@
 import { View, Text, Dimensions, StatusBar } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
 import jaw from "../../assets/gigiSusu/Jaw.svg";
 import sixMonth from "../../assets/gigiSusu/sixMonth.svg";
@@ -10,8 +10,9 @@ import sixTeenMonth from "../../assets/gigiSusu/sixTeenMonth.svg";
 import eightTeenMonth from "../../assets/gigiSusu/eightTeenMonth.svg";
 import twentyFourMonth from "../../assets/gigiSusu/twentyFourMonth.svg";
 import Slider from "@react-native-community/slider";
+import { useFocusEffect } from "@react-navigation/native";
 
-export default function GigiSusu({ display }) {
+export default function GigiSusu({ display, monthRange }) {
   const dataGigi = [
     {
       id: 6,
@@ -49,12 +50,13 @@ export default function GigiSusu({ display }) {
 
   const [imageSource, setImageSource] = useState({});
 
-  const [sliderValue, setSliderValue] = useState(0);
+  const [sliderValue, setSliderValue] = useState();
+
   const handleSliderValue = (value) => {
     const roundedValue = Math.round(value);
     setSliderValue(roundedValue);
     dataGigi.map((data, i) => {
-      if (sliderValue >= data.id) {
+      if (roundedValue >= data.id) {
         setImageSource((oldValue) => ({
           ...oldValue,
           [data.src]: {
@@ -62,7 +64,7 @@ export default function GigiSusu({ display }) {
             opacity: 1,
           },
         }));
-      } else if (sliderValue < data.id) {
+      } else if (roundedValue < data.id) {
         setImageSource((oldValue) => ({
           ...oldValue,
           [data.src]: {
@@ -73,6 +75,33 @@ export default function GigiSusu({ display }) {
       }
     });
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      dataGigi.map((data, i) => {
+        if (monthRange >= data.id) {
+          setImageSource((oldValue) => ({
+            ...oldValue,
+            [data.src]: {
+              src: data.src,
+              opacity: 1,
+            },
+          }));
+        } else if (monthRange < data.id) {
+          setImageSource((oldValue) => ({
+            ...oldValue,
+            [data.src]: {
+              src: data.src,
+              opacity: 0,
+            },
+          }));
+        }
+      });
+
+      setSliderValue(monthRange);
+    }, [])
+  );
+
   return (
     <View
       style={{
@@ -119,7 +148,7 @@ export default function GigiSusu({ display }) {
         <Slider
           style={{ width: "100%", height: 10, display: display }}
           minimumValue={0} //jika anak sudah 10 bln maka minimu value berubah jadi 10
-          maximumValue={30}
+          maximumValue={24}
           minimumTrackTintColor="#FFFFFF"
           maximumTrackTintColor="#000000"
           value={sliderValue}
