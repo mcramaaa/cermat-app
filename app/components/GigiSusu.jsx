@@ -4,11 +4,14 @@ import { Image } from "expo-image";
 import jaw from "../../assets/gigiSusu/Jaw.svg";
 import sixMonth from "../../assets/gigiSusu/sixMonth.svg";
 import eightMonth from "../../assets/gigiSusu/eightMonth.svg";
+import nineMonth from "../../assets/gigiSusu/nineMonth.svg";
 import tenMonth from "../../assets/gigiSusu/tenMonth.svg";
-import twelveMonth from "../../assets/gigiSusu/twelveMonth.svg";
+import thirTeenMonth from "../../assets/gigiSusu/thirTeenMonth.svg";
+import fourTeenMonth from "../../assets/gigiSusu/fourTeenMonth.svg";
 import sixTeenMonth from "../../assets/gigiSusu/sixTeenMonth.svg";
-import eightTeenMonth from "../../assets/gigiSusu/eightTeenMonth.svg";
-import twentyFourMonth from "../../assets/gigiSusu/twentyFourMonth.svg";
+import sevenTeenMonth from "../../assets/gigiSusu/sevenTeenMonth.svg";
+import twentyThreeMonth from "../../assets/gigiSusu/twentyThreeMonth.svg";
+import twentyFiveMonth from "../../assets/gigiSusu/twentyFiveMonth.svg";
 import Slider from "@react-native-community/slider";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -23,24 +26,36 @@ export default function GigiSusu({ display, monthRange }) {
       src: eightMonth,
     },
     {
+      id: 9,
+      src: nineMonth,
+    },
+    {
       id: 10,
       src: tenMonth,
     },
     {
-      id: 12,
-      src: twelveMonth,
+      id: 13,
+      src: thirTeenMonth,
+    },
+    {
+      id: 14,
+      src: fourTeenMonth,
     },
     {
       id: 16,
       src: sixTeenMonth,
     },
     {
-      id: 18,
-      src: eightTeenMonth,
+      id: 17,
+      src: sevenTeenMonth,
     },
     {
-      id: 24,
-      src: twentyFourMonth,
+      id: 23,
+      src: twentyThreeMonth,
+    },
+    {
+      id: 25,
+      src: twentyFiveMonth,
     },
   ];
 
@@ -125,6 +140,7 @@ export default function GigiSusu({ display, monthRange }) {
               height: 400,
               position: "absolute",
               opacity: data.opacity,
+              zIndex: 50,
             }}
           />
         ))}
@@ -149,7 +165,7 @@ export default function GigiSusu({ display, monthRange }) {
         <Slider
           style={{ width: "100%", height: 10, display: display }}
           minimumValue={0} //jika anak sudah 10 bln maka minimu value berubah jadi 10
-          maximumValue={24}
+          maximumValue={25}
           minimumTrackTintColor="#FFFFFF"
           maximumTrackTintColor="#000000"
           value={sliderValue}

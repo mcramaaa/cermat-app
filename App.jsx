@@ -18,6 +18,7 @@ import { useUser } from "./app/hook/useUser.zustand";
 import DataAnakList from "./app/pages/pageFeature/DataAnakList";
 import PgCarousel from "./app/pages/pageFeature/PgCarousel";
 import WaterMark from "./app/components/waterMark";
+import Loading from "./app/components/Loading";
 
 const Stack = createStackNavigator();
 

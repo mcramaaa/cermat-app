@@ -175,7 +175,8 @@ export default function PgKalenderGigi() {
             justifyContent: "space-between",
             borderBottomRightRadius: 20,
             borderBottomLeftRadius: 20,
-            paddingHorizontal: 20,
+            overflow: "hidden",
+            paddingLeft: 20,
             alignItems: "center",
             position: "absolute",
             height: 50,
@@ -198,8 +199,16 @@ export default function PgKalenderGigi() {
               {/* jika tidak ada maka ditulis Data Anak belum ada */}
             </Text>
           </View>
-          <TouchableOpacity onPress={InputAnak}>
-            <FontAwesome name="list-ul" size={24} color="black" />
+          <TouchableOpacity
+            onPress={InputAnak}
+            style={{
+              width: 50,
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FontAwesome name="list-ul" size={30} color="black" />
           </TouchableOpacity>
         </View>
         <View
