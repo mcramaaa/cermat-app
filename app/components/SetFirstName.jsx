@@ -32,7 +32,6 @@ export default function SetFirstName() {
   }
 
   const handleSubmitName = () => {
-    console.log(userName);
     Keyboard.dismiss();
     createUser()
       .then((res) => {

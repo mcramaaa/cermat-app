@@ -1,103 +1,139 @@
-import {
-  View,
-  ScrollView,
-  StatusBar,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-import React, { useState } from "react";
-import { Image } from "expo-image";
-import jaw from "../../../assets/gigi/Jaw.svg";
-import sixMonth from "../../../assets/gigi/sixMonth.svg";
-import eightMonth from "../../../assets/gigi/eightMonth.svg";
-import tenMonth from "../../../assets/gigi/tenMonth.svg";
-import twelveMonth from "../../../assets/gigi/twelveMonth.svg";
-import sixTeenMonth from "../../../assets/gigi/sixTeenMonth.svg";
-import eightTeenMonth from "../../../assets/gigi/eightTeenMonth.svg";
-import twentyFourMonth from "../../../assets/gigi/twentyFourMonth.svg";
-import Slider from "@react-native-community/slider";
-import { useNavigation } from "@react-navigation/native";
+import { View, StatusBar, Text, TouchableOpacity } from "react-native";
+import React, { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import GigiSusu from "../../components/GigiSusu";
+import GigiPerm from "../../components/GigiPerm";
+import AppButton from "../../components/AppButton";
+import * as SQLite from "expo-sqlite";
 
 export default function PgKalenderGigi() {
-  const dataGigi = [
-    {
-      id: 6,
-      src: sixMonth,
-    },
-    {
-      id: 8,
-      src: eightMonth,
-    },
-    {
-      id: 10,
-      src: tenMonth,
-    },
-    {
-      id: 12,
-      src: twelveMonth,
-    },
-    {
-      id: 16,
-      src: sixTeenMonth,
-    },
-    {
-      id: 18,
-      src: eightTeenMonth,
-    },
-    {
-      id: 24,
-      src: twentyFourMonth,
-    },
-  ];
-
-  const screenHeight = Dimensions.get("window").height;
+  const db = SQLite.openDatabase("cermat.db");
   const statusBarHeight = StatusBar.currentHeight || 0;
-
-  const [imageSource, setImageSource] = useState({});
-
-  const [sliderValue, setSliderValue] = useState(0);
-  const handleSliderValue = (value) => {
-    const roundedValue = Math.round(value);
-    setSliderValue(roundedValue);
-    dataGigi.map((data, i) => {
-      if (sliderValue >= data.id) {
-        setImageSource((oldValue) => ({
-          ...oldValue,
-          [data.src]: {
-            src: data.src,
-            opacity: 1,
-          },
-        }));
-      } else if (sliderValue < data.id) {
-        setImageSource((oldValue) => ({
-          ...oldValue,
-          [data.src]: {
-            src: data.src,
-            opacity: 0,
-          },
-        }));
-      }
-    });
-  };
 
   const Navigation = useNavigation();
   const InputAnak = () => {
     Navigation.navigate("DataAnak");
+    setIsLoadingMonthRange(true);
   };
+
+  const [show, setShow] = useState(true);
+  const [monthRange, setMonthRange] = useState(0);
+  const [yearRange, setYearRange] = useState(1);
+  const [isLoadingMonthRange, setIsLoadingMonthRange] = useState(true);
+
+  function getAnak() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM childs WHERE is_active = ?",
+          [true],
+          (_, { rows }) => {
+            const userRows = rows._array;
+            resolve(userRows);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  }
+
+  function getDifferent(birthday) {
+    const currentDate = new Date();
+    const dateObject = new Date(birthday.replace(" ", "T"));
+
+    const isoDateString = dateObject.toISOString();
+    const targetDate = new Date(isoDateString);
+
+    const dayDifference = Math.floor(
+      (currentDate - targetDate) / (24 * 60 * 60 * 1000)
+    );
+
+    const monthRanges = Array.from(
+      { length: Math.ceil(Math.abs(dayDifference) / 29) },
+      (_, index) => {
+        const startDate = new Date(targetDate);
+        const endDate = new Date(targetDate);
+
+        startDate.setDate(targetDate.getDate() + index * 30);
+        endDate.setDate(startDate.getDate() + 29);
+
+        if (endDate > currentDate) {
+          endDate.setDate(currentDate.getDate());
+        }
+
+        return {
+          start: startDate,
+          end: endDate,
+        };
+      }
+    );
+
+    // dataGigi.map((data, i) => {
+    //   if (monthRanges.length - 1 >= data.id) {
+    //     setImageSource((oldValue) => ({
+    //       ...oldValue,
+    //       [data.src]: {
+    //         src: data.src,
+    //         opacity: 1,
+    //       },
+    //     }));
+    //   } else if (monthRanges.length - 1 < data.id) {
+    //     setImageSource((oldValue) => ({
+    //       ...oldValue,
+    //       [data.src]: {
+    //         src: data.src,
+    //         opacity: 0,
+    //       },
+    //     }));
+    //   }
+    // });
+
+    // setSliderValue(monthRanges.length - 1);
+    setMonthRange(monthRanges.length - 1);
+    const year = Math.floor((monthRanges.length - 1) / 12);
+    if (year >= 6) {
+      setYearRange(year);
+      setShow(false);
+      setIsLoadingMonthRange(false);
+    }
+    if (year < 6) {
+      setShow(true);
+      setIsLoadingMonthRange(false);
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      getAnak()
+        .then((anakRows) => {
+          if (anakRows.length > 0) {
+            getDifferent(anakRows[0].birthday);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, [])
+  );
 
   return (
     <View
       style={{
         backgroundColor: "#9BACF1",
         height: "100%",
-        paddingTop: statusBarHeight,
       }}
     >
       <View
-        style={{ position: "relative", height: 100, justifyContent: "center" }}
+        style={{
+          position: "relative",
+          height: 150,
+          justifyContent: "center",
+          marginTop: statusBarHeight,
+        }}
       >
         <Text
           style={{
@@ -110,11 +146,24 @@ export default function PgKalenderGigi() {
         >
           Kalender {"\n"}Pertumbuhan Gigi
         </Text>
+        <View style={{ flexDirection: "row" }}>
+          <AppButton
+            tittle="Gigi Susu"
+            height={40}
+            width={120}
+            onPress={() => setShow(true)}
+          />
+          <AppButton
+            tittle="Gigi Permanen"
+            height={40}
+            width={160}
+            onPress={() => setShow(false)}
+          />
+        </View>
       </View>
       <View
         style={{
           backgroundColor: "white",
-          height: screenHeight - 150,
           width: "100%",
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
@@ -150,55 +199,24 @@ export default function PgKalenderGigi() {
           </TouchableOpacity>
         </View>
 
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
-          <Image source={jaw} style={{ width: 400, height: 400 }} />
-          {Object.entries(imageSource).map(([key, data], i) => (
-            <Image
-              key={i}
-              source={data.src}
-              style={{
-                width: 400,
-                height: 400,
-                position: "absolute",
-                opacity: data.opacity,
-              }}
+        <View>
+          {isLoadingMonthRange ? (
+            <Text>Loading</Text>
+          ) : (
+            <GigiSusu
+              display={show === true ? "" : "none"}
+              monthRange={monthRange}
             />
-          ))}
+          )}
+          {isLoadingMonthRange ? (
+            <Text>Loading</Text>
+          ) : (
+            <GigiPerm
+              display={show === false ? "" : "none"}
+              yearRange={yearRange}
+            />
+          )}
         </View>
-      </View>
-      <View
-        style={{
-          width: "100%",
-          height: 60,
-          flexDirection: "row",
-          gap: 5,
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#e1e4f0",
-          elevation: 1,
-          position: "absolute",
-          bottom: 0,
-          zIndex: 20,
-        }}
-      >
-        <Text style={{ color: "black" }}>Umur</Text>
-        <Slider
-          style={{ minWidth: 280, maxWidth: 450, height: 10 }}
-          minimumValue={0} //jika anak sudah 10 bln maka minimu value berubah jadi 10
-          maximumValue={30}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
-          value={sliderValue}
-          onValueChange={handleSliderValue}
-          tapToSeek={true}
-        />
-        <Text style={{ color: "black" }}>{sliderValue} bulan</Text>
       </View>
     </View>
   );
