@@ -11,9 +11,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as SQLite from "expo-sqlite";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 
 const DataAnakList = () => {
+  const Navigation = useNavigation();
   const db = SQLite.openDatabase("cermat.db");
   const [payload, setPayload] = useState({
     name: "",
@@ -122,7 +124,6 @@ const DataAnakList = () => {
     });
   }
 
-  const lahirAnak = "27-10-2023";
   const [show, setShow] = useState(false);
 
   const addAnak = () => {
@@ -176,6 +177,10 @@ const DataAnakList = () => {
         });
     }, [isCrud])
   );
+
+  const choose = () => {
+    Navigation.navigate("PgKalenderGigi");
+  };
   return (
     <LinearGradient
       colors={["#9BACF1", "#ffffff"]}
@@ -207,25 +212,53 @@ const DataAnakList = () => {
               padding: 20,
             }}
           >
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "Poppins-Regular",
+                marginBottom: 10,
+                borderBottomWidth: 0.5,
+                borderBottomColor: "#9BACF1",
+              }}
+            >
+              Pilih atau Tambah Nama
+            </Text>
             {anaks.map((data, index) => (
               <TouchableOpacity
-                onPress={() => updateAnak(data.id)}
+                onPress={() =>
+                  updateAnak(data.id) & Navigation.navigate("PgKalenderGigi")
+                }
                 key={index}
                 style={{
                   height: 50,
-                  backgroundColor: `${data.is_active ? "red" : "#e1e4f0"}`,
+                  backgroundColor: `${data.is_active ? "#9BACF1" : "#e1e4f0"}`,
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  paddingHorizontal: 20,
+                  paddingLeft: 15,
+                  paddingRight: 5,
                   borderRadius: 10,
                   marginBottom: 10,
                 }}
               >
-                <Text style={{ fontSize: 20, fontFamily: "Poppins-Medium" }}>
+                <Text style={{ fontSize: 15, fontFamily: "Poppins-Medium" }}>
                   {data.name}
                 </Text>
-                <Text>{data.birthday.slice(0, -15)}</Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Text>{data.birthday.slice(0, -15)}</Text>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "white",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 40,
+                      height: 40,
+                      borderRadius: 20,
+                    }}
+                  >
+                    <Feather name="edit" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -267,7 +300,7 @@ const DataAnakList = () => {
               padding: 20,
               minWidth: 320,
               maxWidth: 400,
-              height: 300,
+
               backgroundColor: "white",
               borderRadius: 15,
             }}
@@ -290,7 +323,7 @@ const DataAnakList = () => {
                 borderRadius: 10,
                 borderColor: "#9BACF1",
                 borderWidth: 2,
-                paddingHorizontal: 15,
+                paddingHorizontal: 10,
                 fontSize: 17,
               }}
               onChangeText={(value) => setPayload({ ...payload, name: value })}
@@ -407,6 +440,24 @@ const DataAnakList = () => {
                 >
                   Simpan
                 </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* TOMBOL HAPUS */}
+            <View style={{ alignItems: "center", marginTop: 20, display: "" }}>
+              <TouchableOpacity
+                // onPress={} HAPUS
+                style={{
+                  backgroundColor: "red",
+                  paddingHorizontal: 5,
+                  width: 54,
+                  height: 54,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 27,
+                }}
+              >
+                <AntDesign name="delete" size={24} color="white" />
               </TouchableOpacity>
             </View>
           </View>

@@ -58,7 +58,7 @@ export default function PgCarousel() {
             elevation: 5,
           }}
         >
-          Presistensi Gigi
+          Persistensi Gigi
         </Text>
       </View>
       <ScrollView

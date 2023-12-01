@@ -23,7 +23,8 @@ export default function Home() {
   return (
     <LinearGradient colors={["#9BACF1", "#ffffff"]} style={{ height: "100%" }}>
       <StatusBar style="Dark" />
-      <View style={{ marginTop: statusBarHeight }}>
+
+      <View style={{ marginTop: statusBarHeight, position: "relative" }}>
         <View
           style={{
             flexDirection: "row",
@@ -35,6 +36,24 @@ export default function Home() {
             width: "100%",
           }}
         >
+          <View
+            style={{
+              zIndex: 50,
+              position: "absolute",
+              width: 100,
+              height: 100,
+            }}
+          >
+            <Text
+              style={{
+                backgroundColor: "yellow",
+                bottom: 100,
+                alignItems: "center",
+              }}
+            >
+              TESTER
+            </Text>
+          </View>
           <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 25 }}>
             Hallo {user.name}
           </Text>
@@ -89,7 +108,7 @@ export default function Home() {
           >
             <Image
               source={require("../../assets/All.png")}
-              style={{ width: 200, height: 40 }}
+              style={{ width: 300, height: 60 }}
             />
           </View>
         </View>

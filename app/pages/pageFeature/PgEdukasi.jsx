@@ -1,8 +1,7 @@
 import { View, ScrollView, StatusBar, Text, Dimensions } from "react-native";
 import { Video } from "expo-av";
-import React, { useEffect } from "react";
+import React from "react";
 import * as ScreenOrientation from "expo-screen-orientation";
-import StepPlayer from "../../components/StepPlayer";
 
 export default function PgEdukasi() {
   const statusBarHeight = StatusBar.currentHeight || 0;
@@ -10,12 +9,14 @@ export default function PgEdukasi() {
   const dataVideo = [
     {
       src: require("../../../assets/videos/FilmAnimasi.mp4"),
-      name: "Film Animasi Pendek Gigi dan Kuman",
+      name: "Kenapa Aku Bisa Sakit Gigi",
+      sumber: "by @kaltunid",
     },
 
     {
       src: require("../../../assets/videos/VideoEdukasi.mp4"),
       name: "Video Edukasi Karies Gigi",
+      sumber: "by drg. Nirmawati Musa",
     },
   ];
 
@@ -94,7 +95,7 @@ export default function PgEdukasi() {
               </Text>
               <Video
                 ref={video}
-                style={{ height: 220, width: "100%" }}
+                style={{ height: 230, width: "100%" }}
                 source={data.src}
                 useNativeControls
                 resizeMode="cover"
@@ -102,6 +103,18 @@ export default function PgEdukasi() {
                 onPlaybackStatusUpdate={setStatus}
                 onFullscreenUpdate={setOrientation}
               />
+              <Text
+                style={{
+                  paddingHorizontal: 10,
+                  backgroundColor: "#9BACF1",
+                  color: "white",
+                  fontSize: 15,
+                  textAlign: "center",
+                  // fontFamily: "Poppins-SemiBold",
+                }}
+              >
+                {data.sumber}
+              </Text>
             </View>
           ))}
         </View>
