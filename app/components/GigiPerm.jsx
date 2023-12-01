@@ -1,5 +1,5 @@
 import { View, Text, Dimensions, StatusBar } from "react-native";
-import React, { useCallback, useState } from "react"; 
+import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
 import jaw from "../../assets/gigiPerm/jaw.svg";
 import sixYear from "../../assets/gigiPerm/sixYear.svg";
@@ -107,12 +107,11 @@ export default function GigiPerm({ display, yearRange }) {
   return (
     <View
       style={{
-        height: screenHeight - 95,
+        height: screenHeight * 0.85,
         width: "100%",
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
         display: display,
-        position: "relative",
       }}
     >
       <View>
@@ -143,7 +142,6 @@ export default function GigiPerm({ display, yearRange }) {
           elevation: 1,
           position: "absolute",
           bottom: 0,
-          zIndex: 20,
         }}
       >
         <Text style={{ color: "black" }}>Umur</Text>

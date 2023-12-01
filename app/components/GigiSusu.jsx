@@ -105,12 +105,13 @@ export default function GigiSusu({ display, monthRange }) {
   return (
     <View
       style={{
-        height: screenHeight - 95,
+        height: screenHeight * 0.85,
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
         display: display,
-        position: "relative",
+        zIndex: 10,
+        // position: "relative",
       }}
     >
       <View>

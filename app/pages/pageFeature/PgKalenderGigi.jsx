@@ -1,4 +1,10 @@
-import { View, StatusBar, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import React, { useCallback, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,10 +13,13 @@ import GigiSusu from "../../components/GigiSusu";
 import GigiPerm from "../../components/GigiPerm";
 import AppButton from "../../components/AppButton";
 import * as SQLite from "expo-sqlite";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function PgKalenderGigi() {
   const db = SQLite.openDatabase("cermat.db");
+  const windoHeight = Dimensions.get("window").height;
   const statusBarHeight = StatusBar.currentHeight || 0;
+  const screenHeight = windoHeight - statusBarHeight;
 
   const Navigation = useNavigation();
   const InputAnak = () => {
@@ -125,16 +134,11 @@ export default function PgKalenderGigi() {
   );
 
   return (
-    <View
-      style={{
-        backgroundColor: "#9BACF1",
-        height: "100%",
-      }}
-    >
+    <LinearGradient colors={["#9BACF1", "#e1e4f0"]} style={{ height: "100%" }}>
       <View
         style={{
           position: "relative",
-          height: 100,
+          height: "15%",
           justifyContent: "center",
           marginTop: statusBarHeight,
         }}
@@ -154,11 +158,8 @@ export default function PgKalenderGigi() {
       <View
         style={{
           backgroundColor: "white",
-          width: "100%",
-          width: statusBarHeight - 100,
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
-          paddingTop: 27,
           overflow: "hidden",
           position: "relative",
           alignItems: "center",
@@ -176,9 +177,16 @@ export default function PgKalenderGigi() {
             width: "100%",
             top: 0,
             backgroundColor: "#e1e4f0",
+            zIndex: 20,
           }}
         >
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 10,
+              alignItems: "center",
+            }}
+          >
             <MaterialIcons name="child-care" size={35} color="black" />
             <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 20 }}>
               {namaAnak}
@@ -189,13 +197,13 @@ export default function PgKalenderGigi() {
             <AntDesign name="pluscircleo" size={24} color="black" />
           </TouchableOpacity>
         </View>
-
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
             position: "absolute",
             top: 60,
+            zIndex: 20,
           }}
         >
           <AppButton
@@ -210,9 +218,17 @@ export default function PgKalenderGigi() {
             width={160}
             onPress={() => setShow(false)}
           />
+        </View>
 
-
-        <View>
+        <View
+        // style={{
+        //   // position: "absolute",
+        //   height: screenHeight * 0.85 - 20,
+        //   width: "100%",
+        //   bottom: 0,
+        //   // backgroundColor: "yellow",
+        // }}
+        >
           {isLoadingMonthRange ? (
             <Text></Text>
           ) : (
@@ -229,11 +245,8 @@ export default function PgKalenderGigi() {
               yearRange={yearRange}
             />
           )}
-
         </View>
-
-       
       </View>
-    </View>
+    </LinearGradient>
   );
 }
