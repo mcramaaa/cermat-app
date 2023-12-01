@@ -148,7 +148,7 @@ export default function GigiPerm({ display, yearRange }) {
         <Slider
           style={{ width: "100%", height: 10 }}
           minimumValue={6} //jika anak sudah 10 bln maka minimu value berubah jadi 10
-          maximumValue={17}
+          maximumValue={21}
           minimumTrackTintColor="#FFFFFF"
           maximumTrackTintColor="#000000"
           value={sliderValue}
