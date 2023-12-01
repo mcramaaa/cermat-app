@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -17,12 +17,12 @@ import { useEffect, useState } from "react";
 import { useUser } from "./app/hook/useUser.zustand";
 import DataAnakList from "./app/pages/pageFeature/DataAnakList";
 import PgCarousel from "./app/pages/pageFeature/PgCarousel";
+import WaterMark from "./app/components/waterMark";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const { user, setUser } = useUser();
-  // const [isUserSet, setIsUserSet] = useState(false);
   const [isAlarmTable, setIsAlarmTable] = useState(false);
   const db = SQLite.openDatabase("cermat.db");
 
@@ -233,7 +233,6 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="dark" />
-
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName={`${user.name != "" ? "App" : "firstName"}`}
@@ -318,6 +317,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
+        <WaterMark />
       </NavigationContainer>
     </View>
   );

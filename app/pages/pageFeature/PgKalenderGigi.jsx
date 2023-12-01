@@ -8,7 +8,7 @@ import {
 import React, { useCallback, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import GigiSusu from "../../components/GigiSusu";
 import GigiPerm from "../../components/GigiPerm";
 import AppButton from "../../components/AppButton";
@@ -134,12 +134,13 @@ export default function PgKalenderGigi() {
   );
 
   return (
-    <LinearGradient colors={["#9BACF1", "#e1e4f0"]} style={{ height: "100%" }}>
+    <LinearGradient colors={["#ffffff", "#e1e4f0"]} style={{ height: "100%" }}>
       <View
         style={{
           position: "relative",
           height: "15%",
           justifyContent: "center",
+          backgroundColor: "#9BACF1",
           marginTop: statusBarHeight,
         }}
       >
@@ -147,7 +148,7 @@ export default function PgKalenderGigi() {
           style={{
             textAlign: "center",
             fontFamily: "Poppins-Bold",
-            fontSize: 20,
+            fontSize: 30,
             color: "white",
             elevation: 5,
           }}
@@ -158,8 +159,7 @@ export default function PgKalenderGigi() {
       <View
         style={{
           backgroundColor: "white",
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
+          // height: "100%",
           overflow: "hidden",
           position: "relative",
           alignItems: "center",
@@ -170,6 +170,8 @@ export default function PgKalenderGigi() {
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
+            borderBottomRightRadius: 20,
+            borderBottomLeftRadius: 20,
             paddingHorizontal: 20,
             alignItems: "center",
             position: "absolute",
@@ -194,16 +196,18 @@ export default function PgKalenderGigi() {
             </Text>
           </View>
           <TouchableOpacity onPress={InputAnak}>
-            <AntDesign name="pluscircleo" size={24} color="black" />
+            <FontAwesome name="list-ul" size={24} color="black" />
           </TouchableOpacity>
         </View>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
+            alignItems: "center",
             position: "absolute",
             top: 60,
             zIndex: 20,
+            gap: 20,
           }}
         >
           <AppButton

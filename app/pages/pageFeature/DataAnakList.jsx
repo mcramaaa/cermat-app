@@ -11,9 +11,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as SQLite from "expo-sqlite";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 const DataAnakList = () => {
+  const Navigation = useNavigation();
   const db = SQLite.openDatabase("cermat.db");
   const [payload, setPayload] = useState({
     name: "",
@@ -122,7 +123,6 @@ const DataAnakList = () => {
     });
   }
 
-  const lahirAnak = "27-10-2023";
   const [show, setShow] = useState(false);
 
   const addAnak = () => {
@@ -176,6 +176,10 @@ const DataAnakList = () => {
         });
     }, [isCrud])
   );
+
+  const choose = () => {
+    Navigation.navigate("PgKalenderGigi");
+  };
   return (
     <LinearGradient
       colors={["#9BACF1", "#ffffff"]}
@@ -209,11 +213,13 @@ const DataAnakList = () => {
           >
             {anaks.map((data, index) => (
               <TouchableOpacity
-                onPress={() => updateAnak(data.id)}
+                onPress={() =>
+                  updateAnak(data.id) & Navigation.navigate("PgKalenderGigi")
+                }
                 key={index}
                 style={{
                   height: 50,
-                  backgroundColor: `${data.is_active ? "red" : "#e1e4f0"}`,
+                  backgroundColor: `${data.is_active ? "#9BACF1" : "#e1e4f0"}`,
                   flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
