@@ -1,10 +1,4 @@
-import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Text,
-  StatusBar,
-} from "react-native";
+import { View, ScrollView, Text, StatusBar } from "react-native";
 import React, { useCallback } from "react";
 import Reminder from "../components/cermatBtn/Reminder";
 import Edukasi from "../components/cermatBtn/Edukasi";
@@ -16,7 +10,6 @@ import { getTodayString } from "../helpers/getTodayString";
 import { useRemoinder } from "../hook/useReminder.zustand";
 import * as SQLite from "expo-sqlite";
 // import { TouchableOpacity } from "react-native-gesture-handler";
-
 
 export default function Cermat() {
   const Navigation = useNavigation();
