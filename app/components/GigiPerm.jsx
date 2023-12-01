@@ -1,5 +1,5 @@
-import { View, Text, Dimensions } from "react-native";
-import React, { useCallback, useState } from "react";
+import { View, Text, Dimensions, StatusBar } from "react-native";
+import React, { useCallback, useState } from "react"; 
 import { Image } from "expo-image";
 import jaw from "../../assets/gigiPerm/jaw.svg";
 import sixYear from "../../assets/gigiPerm/sixYear.svg";
@@ -74,7 +74,10 @@ export default function GigiPerm({ display, yearRange }) {
     },
   ];
 
-  const screenHeight = Dimensions.get("window").height;
+  const windoHeight = Dimensions.get("window").height;
+  const statusBarHeight = StatusBar.currentHeight || 0;
+  const screenHeight = windoHeight - statusBarHeight;
+
   const [imageSource, setImageSource] = useState({});
 
   const [sliderValue, setSliderValue] = useState(0);
@@ -104,7 +107,7 @@ export default function GigiPerm({ display, yearRange }) {
   return (
     <View
       style={{
-        height: screenHeight - 200,
+        height: screenHeight - 95,
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
@@ -113,14 +116,14 @@ export default function GigiPerm({ display, yearRange }) {
       }}
     >
       <View>
-        <Image source={jaw} style={{ width: 400, height: 400 }} />
+        <Image source={jaw} style={{ width: 450, height: 450 }} />
         {Object.entries(imageSource).map(([key, data], i) => (
           <Image
             key={i}
             source={data.src}
             style={{
-              width: 400,
-              height: 400,
+              width: 450,
+              height: 450,
               position: "absolute",
               opacity: data.opacity,
             }}
@@ -129,8 +132,9 @@ export default function GigiPerm({ display, yearRange }) {
       </View>
       <View
         style={{
-          width: "100%",
           height: 60,
+          width: "100%",
+          paddingHorizontal: 50,
           flexDirection: "row",
           gap: 5,
           alignItems: "center",
@@ -144,7 +148,7 @@ export default function GigiPerm({ display, yearRange }) {
       >
         <Text style={{ color: "black" }}>Umur</Text>
         <Slider
-          style={{ minWidth: 280, maxWidth: 450, height: 10 }}
+          style={{ width: "100%", height: 10 }}
           minimumValue={6} //jika anak sudah 10 bln maka minimu value berubah jadi 10
           maximumValue={17}
           minimumTrackTintColor="#FFFFFF"

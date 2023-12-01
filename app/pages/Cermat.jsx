@@ -10,11 +10,13 @@ import Reminder from "../components/cermatBtn/Reminder";
 import Edukasi from "../components/cermatBtn/Edukasi";
 import KalenderGigi from "../components/cermatBtn/KalenderGigi";
 import Monitoring from "../components/cermatBtn/Monitoring";
+import Carousel from "../components/cermatBtn/Carousel";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getTodayString } from "../helpers/getTodayString";
 import { useRemoinder } from "../hook/useReminder.zustand";
 import * as SQLite from "expo-sqlite";
 // import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 export default function Cermat() {
   const Navigation = useNavigation();
@@ -22,6 +24,9 @@ export default function Cermat() {
   const statusBarHeight = StatusBar.currentHeight || 0;
   const db = SQLite.openDatabase("cermat.db");
 
+  const goCarousel = () => {
+    Navigation.navigate("PgCarousel");
+  };
   const goEdukasi = () => {
     Navigation.navigate("PgEdukasi");
   };
@@ -94,7 +99,7 @@ export default function Cermat() {
           borderTopLeftRadius: 20,
           paddingTop: 27,
           // marginTop: 130,
-          paddingHorizontal: 25,
+          // paddingHorizontal: 25,
           overflow: "hidden",
         }}
       >
@@ -103,9 +108,11 @@ export default function Cermat() {
             gap: 25,
             paddingBottom: 170,
             alignItems: "center",
-            paddingHorizontal: 10,
+            marginHorizontal: 10,
+            // paddingHorizontal: 10,
           }}
         >
+          <Carousel onPress={goCarousel} />
           <Edukasi onPress={goEdukasi} />
           <Reminder onPress={goReminder} />
           <KalenderGigi onPress={goKalenderGigi} />

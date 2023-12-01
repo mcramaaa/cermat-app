@@ -130,7 +130,7 @@ export default function PgKalenderGigi() {
       <View
         style={{
           position: "relative",
-          height: 150,
+          height: 100,
           justifyContent: "center",
           marginTop: statusBarHeight,
         }}
@@ -139,32 +139,19 @@ export default function PgKalenderGigi() {
           style={{
             textAlign: "center",
             fontFamily: "Poppins-Bold",
-            fontSize: 30,
+            fontSize: 20,
             color: "white",
             elevation: 5,
           }}
         >
           Kalender {"\n"}Pertumbuhan Gigi
         </Text>
-        <View style={{ flexDirection: "row" }}>
-          <AppButton
-            tittle="Gigi Susu"
-            height={40}
-            width={120}
-            onPress={() => setShow(true)}
-          />
-          <AppButton
-            tittle="Gigi Permanen"
-            height={40}
-            width={160}
-            onPress={() => setShow(false)}
-          />
-        </View>
       </View>
       <View
         style={{
           backgroundColor: "white",
           width: "100%",
+          width: statusBarHeight - 100,
           borderTopRightRadius: 20,
           borderTopLeftRadius: 20,
           paddingTop: 27,
@@ -199,6 +186,28 @@ export default function PgKalenderGigi() {
           </TouchableOpacity>
         </View>
 
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            position: "absolute",
+            top: 60,
+          }}
+        >
+          <AppButton
+            tittle="Gigi Susu"
+            height={40}
+            width={120}
+            onPress={() => setShow(true)}
+          />
+          <AppButton
+            tittle="Gigi Permanen"
+            height={40}
+            width={160}
+            onPress={() => setShow(false)}
+          />
+
+
         <View>
           {isLoadingMonthRange ? (
             <Text>Loading</Text>
@@ -216,7 +225,10 @@ export default function PgKalenderGigi() {
               yearRange={yearRange}
             />
           )}
+
         </View>
+
+       
       </View>
     </View>
   );

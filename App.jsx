@@ -16,6 +16,7 @@ import * as SQLite from "expo-sqlite";
 import { useEffect, useState } from "react";
 import { useUser } from "./app/hook/useUser.zustand";
 import DataAnakList from "./app/pages/pageFeature/DataAnakList";
+import PgCarousel from "./app/pages/pageFeature/PgCarousel";
 
 const Stack = createStackNavigator();
 
@@ -242,6 +243,17 @@ export default function App() {
           <Stack.Screen
             name="PgEdukasi"
             component={PgEdukasi}
+            options={{
+              headerTitleStyle: { display: "none" },
+              headerTransparent: true,
+              headerBackImage: () => (
+                <Ionicons name="arrow-back-outline" size={35} color="white" />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="PgCarousel"
+            component={PgCarousel}
             options={{
               headerTitleStyle: { display: "none" },
               headerTransparent: true,

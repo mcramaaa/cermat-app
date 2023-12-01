@@ -43,29 +43,56 @@ export default function Home() {
           </TouchableOpacity>
         </View>
 
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={{ width: "70%" }}
-            resizeMode="contain"
-          />
+        <View>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image
+              source={require("../../assets/logo.png")}
+              style={{ width: "70%" }}
+              resizeMode="contain"
+            />
+          </View>
+          <Text
+            style={{
+              fontFamily: "Poppins-SemiBold",
+              fontSize: 30,
+              textAlign: "center",
+            }}
+          >
+            CERMAT
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Poppins-SemiBold",
+              fontSize: 20,
+              textAlign: "center",
+              color: "#3371AD",
+            }}
+          >
+            {'"'}Cek Rutin Masalah Gigi dan Mulut{'"'}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Poppins-Medium",
+              fontSize: 12,
+              textAlign: "center",
+            }}
+          >
+            Bersama Cermat untuk Gigi yang Lebih Sehat
+          </Text>
+          <View
+            style={{
+              marginTop: 20,
+              justifyContent: "center",
+              alignItems: "center",
+              elevation: 4,
+            }}
+          >
+            <Image
+              source={require("../../assets/All.png")}
+              style={{ width: 200, height: 40 }}
+            />
+          </View>
         </View>
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: "white",
-            height: "100%",
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            elevation: 1,
-          }}
-        ></View>
-        <AppButton
-          tittle="setFirstName page"
-          height={50}
-          width={200}
-          onPress={setFirstNameBtn}
-        />
       </View>
     </LinearGradient>
   );

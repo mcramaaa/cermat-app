@@ -1,14 +1,12 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function Monitoring({ onPress }) {
+export default function Carousel({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
-      <LinearGradient
-        colors={["#9BACF1", "#9BACF1"]}
+      <View
         style={{
           height: 200,
           minWidth: 320,
@@ -31,14 +29,18 @@ export default function Monitoring({ onPress }) {
             left: 10,
           }}
         >
-          <FontAwesome5 name="tasks" size={24} color="white" />
+          <MaterialCommunityIcons
+            name="view-carousel-outline"
+            size={30}
+            color="white"
+          />
           <Text style={{ fontFamily: "Poppins-Medium", color: "white" }}>
-            Teledentistry
+            Presistensi Gigi
           </Text>
         </View>
         <View style={{ justifyContent: "center" }}>
           <Text style={{ fontFamily: "Poppins-Medium", color: "white" }}>
-            Ayo selamatkan gigimu dan kunjungi{"\n"}dokter gigi secara rutin{" "}
+            Kenali Presistensi Gigi {"\n"}Pada Anak
           </Text>
         </View>
         <View
@@ -53,12 +55,10 @@ export default function Monitoring({ onPress }) {
             gap: 10,
           }}
         >
-          <Text style={{ fontFamily: "Poppins-Medium" }}>
-            Monitoring Gigi dan Mulut
-          </Text>
+          <Text style={{ fontFamily: "Poppins-Medium" }}>Lihat Materi</Text>
           <AntDesign name="arrowright" size={15} color="black" />
         </View>
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 }

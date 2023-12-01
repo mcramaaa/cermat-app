@@ -1,4 +1,4 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, StatusBar } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
 import jaw from "../../assets/gigiSusu/Jaw.svg";
@@ -44,7 +44,10 @@ export default function GigiSusu({ display, monthRange }) {
     },
   ];
 
-  const screenHeight = Dimensions.get("window").height;
+  const windoHeight = Dimensions.get("window").height;
+  const statusBarHeight = StatusBar.currentHeight || 0;
+  const screenHeight = windoHeight - statusBarHeight;
+
   const [imageSource, setImageSource] = useState({});
 
   const [sliderValue, setSliderValue] = useState();
@@ -102,11 +105,12 @@ export default function GigiSusu({ display, monthRange }) {
   return (
     <View
       style={{
-        height: screenHeight - 200,
+        height: screenHeight - 95,
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
         display: display,
+        position: "relative",
       }}
     >
       <View>
@@ -126,8 +130,9 @@ export default function GigiSusu({ display, monthRange }) {
       </View>
       <View
         style={{
-          width: "100%",
           height: 60,
+          width: "100%",
+          paddingHorizontal: 50,
           flexDirection: "row",
           gap: 5,
           alignItems: "center",
@@ -141,7 +146,7 @@ export default function GigiSusu({ display, monthRange }) {
       >
         <Text style={{ color: "black" }}>Umur</Text>
         <Slider
-          style={{ minWidth: 280, maxWidth: 450, height: 10 }}
+          style={{ width: "100%", height: 10, display: display }}
           minimumValue={0} //jika anak sudah 10 bln maka minimu value berubah jadi 10
           maximumValue={24}
           minimumTrackTintColor="#FFFFFF"
@@ -149,6 +154,7 @@ export default function GigiSusu({ display, monthRange }) {
           value={sliderValue}
           onValueChange={handleSliderValue}
           tapToSeek={true}
+          thumbStyle={{ width: 40, height: 40 }}
         />
         <Text style={{ color: "black" }}>{sliderValue} bulan</Text>
       </View>

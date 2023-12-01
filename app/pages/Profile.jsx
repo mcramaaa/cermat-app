@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Keyboard } from "react-native";
+import { View, Text, TextInput, Keyboard, Image } from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import AppButton from "../components/AppButton";
@@ -24,6 +24,13 @@ const Profile = () => {
       colors={["#9BACF1", "#ffffff"]}
       style={{ height: "100%", justifyContent: "center", alignItems: "center" }}
     >
+      <View style={{ justifyContent: "center" }}>
+        <Image
+          source={require("../../assets/logo.png")}
+          style={{ width: 250, height: 250 }}
+          resizeMode="contain"
+        />
+      </View>
       <View
         style={{
           width: 350,
