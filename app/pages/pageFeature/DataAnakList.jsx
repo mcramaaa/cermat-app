@@ -19,6 +19,14 @@ const DataAnakList = () => {
     name: "",
     birthDay: "",
   });
+  /**
+   *
+   */
+
+  /**
+   *
+   */
+  console.log(payload);
   const [isCrud, setIsCrud] = useState(1);
 
   const [date, setDate] = useState(new Date());
@@ -142,6 +150,21 @@ const DataAnakList = () => {
   }
   useFocusEffect(
     useCallback(() => {
+      if (payload.birthDay == "") {
+        const isoDate = new Date();
+        const year = isoDate.getUTCFullYear();
+        const month = isoDate.getMonth() + 1;
+        const day = isoDate.getUTCDate();
+        const hours = isoDate.getHours();
+        const minutes = isoDate.getMinutes();
+        const seconds = isoDate.getSeconds();
+        const milliseconds = "000000";
+
+        const newDateString = `${year}-${month < 10 ? "0" : ""}${month}-${
+          day < 10 ? "0" : ""
+        }${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+        setPayload({ ...payload, birthDay: newDateString });
+      }
       getAnak()
         .then((anakRows) => {
           if (anakRows.length > 0) {
