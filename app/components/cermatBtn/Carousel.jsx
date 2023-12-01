@@ -35,12 +35,12 @@ export default function Carousel({ onPress }) {
             color="white"
           />
           <Text style={{ fontFamily: "Poppins-Medium", color: "white" }}>
-            Presistensi Gigi
+            Persistensi Gigi
           </Text>
         </View>
         <View style={{ justifyContent: "center" }}>
           <Text style={{ fontFamily: "Poppins-Medium", color: "white" }}>
-            Kenali Presistensi Gigi {"\n"}Pada Anak
+            Kenali Persistensi Gigi {"\n"}Pada Anak
           </Text>
         </View>
         <View

@@ -134,7 +134,10 @@ export default function PgKalenderGigi() {
   );
 
   return (
-    <LinearGradient colors={["#ffffff", "#e1e4f0"]} style={{ height: "100%" }}>
+    <LinearGradient
+      colors={["#9BACF1", "#ffffff", "#e1e4f0"]}
+      style={{ height: "100%" }}
+    >
       <View
         style={{
           position: "relative",

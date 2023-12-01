@@ -13,10 +13,9 @@ import { useNavigation } from "@react-navigation/native";
 export default function Keluhan() {
   const navigation = useNavigation();
   const [text, setText] = useState("");
-  const noWhatsApp = "81945389062";
+  const noWhatsApp = "81228434764";
   const handleSubmit = () => {
     Keyboard.dismiss();
-    // navigation.navigate("App");
     Linking.openURL(
       `https://api.whatsapp.com/send?phone=62${noWhatsApp}&text=${text}`
     );
